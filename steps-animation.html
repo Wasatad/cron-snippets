@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="placeholder-wrapper">
+      <div class="placeholder-inner">Прокрутите страницу вниз ↓</div>
+    </div>
+
+    <section class="process" id="process">
+      <div class="process__intro">
+        <h2>Как проходит автоматизация</h2>
+        <p>Автоматизируем процессы компании за&nbsp;6&nbsp;шагов</p>
+      </div>
+
+      <div class="process__timeline">
+        <svg
+          class="process__line"
+          viewBox="0 0 40 1200"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path id="timelinePath" d="M20 20 L20 1180"></path>
+        </svg>
+        <svg
+          class="dashed__line"
+          viewBox="0 0 40 1200"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path id="timelinePath" d="M20 20 L20 1180"></path>
+        </svg>
+
+        <div class="process__steps">
+          <article class="step">
+            <div class="step__dot"><span>01</span></div>
+            <div class="step__body">
+              <h3>Аудит</h3>
+              <p>
+                Изучаем процессы, выявляем узкие места и формируем требования.
+              </p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__dot"><span>02</span></div>
+            <div class="step__body">
+              <h3>Проектирование</h3>
+              <p>
+                Разрабатываем архитектуру решения и дорожную карту
+                автоматизации.
+              </p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__dot"><span>03</span></div>
+            <div class="step__body">
+              <h3>Настройка и разработка</h3>
+              <p>
+                Настраиваем типовой функционал и создаем необходимые доработки.
+              </p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__dot"><span>04</span></div>
+            <div class="step__body">
+              <h3>Тестирование</h3>
+              <p>Проверяем корректность работы процессов и интеграций.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__dot"><span>05</span></div>
+            <div class="step__body">
+              <h3>Обучение пользователей</h3>
+              <p>Подготавливаем сотрудников к работе в новой системе.</p>
+            </div>
+          </article>
+
+          <article class="step">
+            <div class="step__dot"><span>06</span></div>
+            <div class="step__body">
+              <h3>Запуск и сопровождение</h3>
+              <p>Обеспечиваем поддержку после ввода системы в эксплуатацию.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="placeholder-wrapper">
+      <div class="placeholder-inner">Прокрутите страницу вверх ↑</div>
+    </div>
+  </body>
+</html>
+
+<style>
+  :root {
+    --blue: #4c9afd;
+    --blue-soft: rgba(111, 168, 255, 0.18);
+    --text: #252b37;
+    --muted: #7d8597;
+    --line: #4c9afd;
+    --dot-size: 48px;
+    --timeline-width: 40px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    color: var(--text);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .placeholder-wrapper {
+    width: 100%;
+    height: 1000px;
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .placeholder-wrapper .placeholder-inner {
+    background-color: #e7edf5;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+
+    color: #88919e;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .process {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 72px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .process__intro {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+
+  .process__intro h2 {
+    margin: 0 0 20px;
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .process__intro p {
+    margin: 0;
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .process__timeline {
+    position: relative;
+  }
+
+  .dashed__line {
+    position: absolute;
+    z-index: -1;
+    left: 90px;
+    top: 0;
+    width: var(--timeline-width);
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .dashed__line path {
+    stroke: #c7dcff;
+    stroke-width: 2;
+    stroke-dasharray: 12 12;
+    stroke-dashoffset: 0;
+  }
+
+  .process__line {
+    position: absolute;
+    left: 90px;
+    top: 0;
+    width: var(--timeline-width);
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .process__line path {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 10 10;
+    stroke-dashoffset: 0;
+  }
+
+  .process__steps {
+    position: relative;
+    padding-left: 86px;
+    display: grid;
+    gap: 56px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .step__dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--blue);
+
+    background: #eaf4fe;
+
+    transition:
+      background 0.35s ease,
+      color 0.35s ease,
+      box-shadow 0.35s ease,
+      transform 0.35s ease;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .step__dot span {
+    position: relative;
+    z-index: 2;
+  }
+
+  .step__dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--blue);
+    transform: scale(0);
+    transform-origin: center;
+    border-radius: 50%;
+    transition: transform 0.25s linear;
+  }
+
+  .step__dot.is-active {
+    color: #fff;
+    box-shadow: 0 0 0 10px var(--blue-soft);
+    transform: scale(1.02);
+  }
+
+  .step__dot.is-active::after {
+    transform: scale(1);
+  }
+
+  .step__body h3 {
+    margin: 2px 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  .step__body p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 620px;
+  }
+
+  @media (max-width: 900px) {
+    .process {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .process__steps {
+      padding-left: 68px;
+    }
+
+    .step__body h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .step__body p {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector("#process");
+  const path = document.querySelector("#timelinePath");
+  const steps = [...document.querySelectorAll(".step")];
+  const dots = [...document.querySelectorAll(".step__dot")];
+
+  const pathLength = path.getTotalLength();
+  path.style.strokeDasharray = pathLength;
+  path.style.strokeDashoffset = pathLength;
+
+  const thresholds = [0.08, 0.24, 0.4, 0.58, 0.76, 0.92];
+
+  let startScroll = 0;
+  let endScroll = 1;
+  let ticking = false;
+
+  function clamp(v, min, max) {
+    return Math.max(min, Math.min(max, v));
+  }
+
+  function measure() {
+    const rect = section.getBoundingClientRect();
+    const pageTop = window.scrollY || window.pageYOffset;
+    const top = pageTop + rect.top;
+    const height = section.offsetHeight;
+    const vh = window.innerHeight;
+
+    startScroll = top - vh * 0.75;
+    endScroll = top + height - vh * 0.25;
+
+    update();
+  }
+
+  function update() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const progress = clamp(
+      (scrollY - startScroll) / (endScroll - startScroll),
+      0,
+      1,
+    );
+
+    path.style.strokeDashoffset = pathLength * (1 - progress);
+
+    dots.forEach((dot, i) => {
+      if (progress >= thresholds[i]) {
+        dot.classList.add("is-active");
+        steps[i].classList.add("is-active");
+      } else {
+        dot.classList.remove("is-active");
+        steps[i].classList.remove("is-active");
+      }
+    });
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      update();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", measure);
+  window.addEventListener("load", measure);
+  measure();
+</script>
