@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Кнопка для формы</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="btn-container">
+        <div class="text-comment">Когда кнопка не активна</div>
+        <button class="form-button disabled">
+          Далее
+
+          <svg
+            data-v-e3e0b525=""
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-move-right-icon size-4"
+          >
+            <path d="M18 8L22 12L18 16"></path>
+            <path d="M2 12H22"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="btn-container">
+        <div class="text-comment">Когда кнопка активна</div>
+        <button class="form-button active" id="formButton">
+          Далее
+
+          <svg
+            data-v-e3e0b525=""
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-move-right-icon size-4"
+          >
+            <path d="M18 8L22 12L18 16"></path>
+            <path d="M2 12H22"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  function createRipple(event) {
+    const button = event.currentTarget;
+
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+    circle.classList.add("ripple");
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+
+    if (ripple) {
+      ripple.remove();
+    }
+
+    button.appendChild(circle);
+  }
+
+  const button = document.getElementById("formButton");
+  button.addEventListener("click", createRipple);
+</script>
+
+<style>
+  :root {
+    --blue: #4c9afd;
+    --blue-dark: #3386ea;
+    --blue-soft: #92c5f7;
+    --text: #252b37;
+    --muted: #7d8597;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    color: var(--text);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .text-comment {
+    color: gray;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e9eaeb;
+  }
+
+  .form-button {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    background-color: var(--blue);
+    color: white;
+    padding: 12px 24px;
+    min-width: 150px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 140%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    outline: 0;
+    border: 0;
+  }
+
+  .form-button.active:hover {
+    background-color: var(--blue-dark);
+  }
+
+  .form-button.disabled {
+    background-color: var(--blue-soft);
+    pointer-events: none;
+  }
+
+  /* Анимация пульсации фона */
+
+  @keyframes subtle-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(41, 98, 255, 0.4);
+    }
+
+    70% {
+      box-shadow: 0 0 0 10px rgba(41, 98, 255, 0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgba(41, 98, 255, 0);
+    }
+  }
+
+  .form-button.active {
+    animation: subtle-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  }
+
+  /* Анимация при нажатии */
+
+  span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+</style>
