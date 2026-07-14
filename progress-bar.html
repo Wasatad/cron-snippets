@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Прогресс-бар</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="calculator-container">
+        <div class="step-number">
+          Шаг&nbsp;<span id="activeStep">1</span>&nbsp;из&nbsp
+          <span id="stepsQty">10</span>
+        </div>
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="control-btns">
+          <button class="nav-button" id="backBtn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-move-left-icon lucide-move-left"
+            >
+              <path d="M6 8L2 12L6 16" />
+              <path d="M2 12H22" />
+            </svg>
+            Назад
+          </button>
+          <button class="nav-button" id="nextBtn">
+            Далее
+            <svg
+              data-v-e3e0b525=""
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-move-right-icon size-4"
+            >
+              <path d="M18 8L22 12L18 16"></path>
+              <path d="M2 12H22"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  const progressBar = document.getElementById("progressBar");
+  const backBtn = document.getElementById("backBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const activeStep = document.getElementById("activeStep");
+  const stepsQty = document.getElementById("stepsQty");
+
+  const totalSteps = 10; // заменить на актуальное количество шагов
+  let stepCounter = 2; // заменить на 1
+
+  stepsQty.innerText = totalSteps;
+
+  function renderProgress() {
+    const progress =
+      totalSteps === 1 ? 100 : ((stepCounter - 1) / (totalSteps - 1)) * 100;
+
+    progressBar.style.width = progress + "%";
+    activeStep.innerText = stepCounter;
+  }
+
+  nextBtn.addEventListener("click", () => {
+    if (stepCounter < totalSteps) {
+      stepCounter++;
+      renderProgress();
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    if (stepCounter > 1) {
+      stepCounter--;
+      renderProgress();
+    }
+  });
+
+  renderProgress();
+</script>
+
+<style>
+  :root {
+    --blue: #4c9afd;
+    --blue-dark: #3386ea;
+    --text: #252b37;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+    color: var(--text);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrapper {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .calculator-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 32px; */
+    background-color: #f5f7fa;
+    padding: 48px;
+    border-radius: 24px;
+  }
+
+  .step-number {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    font-size: 14px;
+    font-weight: 400;
+    color: #a4a7ae;
+    margin-bottom: 12px;
+  }
+
+  .progress-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 500px;
+  }
+
+  .progress-container::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 100px;
+  }
+
+  .progress-bar {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    display: grid;
+    place-items: center;
+    height: 10px;
+    width: 100px;
+    border: 0;
+    border-radius: 100px;
+    transition: width 0.3s ease;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: translateX(25px);
+    }
+    100% {
+      transform: translateX(70px);
+    }
+  }
+
+  .progress-bar::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: -400%;
+    width: 700%;
+    height: 100%;
+    background: #4ade80
+      repeating-linear-gradient(
+        60deg,
+        transparent,
+        transparent 10px,
+        #36d26f 10px,
+        #36d26f 20px
+      );
+
+    animation: loading 2s infinite linear;
+  }
+
+  .control-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    padding-top: 40px;
+  }
+  .nav-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 18px;
+    min-width: 150px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    cursor: pointer;
+    background: var(--blue);
+    color: #fff;
+    transition: background-color 0.25s ease;
+  }
+
+  .nav-button#backBtn {
+    border: 1px solid var(--blue);
+    background: none;
+    color: var(--blue);
+  }
+
+  .nav-button:hover {
+    background: var(--blue-dark);
+  }
+
+  .nav-button:active {
+    transform: translateY(1px);
+  }
+</style>
