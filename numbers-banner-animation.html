@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>О нас в цифрах</title>
+  </head>
+  <body>
+    <div class="placeholder-wrapper">
+      <div class="placeholder-inner">Прокрутите страницу вниз ↓</div>
+    </div>
+    <section class="stats-section">
+      <!-- Слой для параллакс-фона -->
+      <div class="stats-bg"></div>
+      <div class="stats-container">
+        <div class="stats-header">
+          <h2>О нас в цифрах</h2>
+          <p>
+            Многолетний опыт и профессионализм наших сотрудников позволяют нам
+            успешно выполнять проекты по внедрению решений любой сложности.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          <!-- Блок 1 -->
+          <div class="stat-item">
+            <div class="stat-value">
+              <span class="stat-number" data-target="7">0</span>
+              <span class="stat-suffix"> + лет</span>
+            </div>
+            <hr class="stat-divider" />
+            <p class="stat-desc">Средний стаж работы разработчиков</p>
+          </div>
+
+          <!-- Блок 2 -->
+          <div class="stat-item">
+            <div class="stat-value">
+              <span class="stat-number" data-target="200">0</span>
+              <span class="stat-suffix"> +</span>
+            </div>
+            <hr class="stat-divider" />
+            <p class="stat-desc">Успешно реализованных проектов</p>
+          </div>
+
+          <!-- Блок 3 -->
+          <div class="stat-item">
+            <div class="stat-value">
+              <span class="stat-number" data-target="50">0</span>
+              <span class="stat-suffix"> +</span>
+            </div>
+            <hr class="stat-divider" />
+            <p class="stat-desc">Технических специалистов в штате</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="placeholder-wrapper">
+      <div class="placeholder-inner">Прокрутите страницу вверх ↑</div>
+    </div>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll(".stat-number");
+      const duration = 2000; // Длительность анимации в миллисекундах (2 секунды)
+
+      // Настройки для Intersection Observer
+      const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.5, // Анимация начнется, когда блок будет виден на 50%
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          // Если секция попала в область видимости
+          if (entry.isIntersecting) {
+            counters.forEach((counter) => {
+              const target = +counter.getAttribute("data-target");
+              let startTime = null;
+
+              // Функция шага анимации
+              const step = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min(
+                  (timestamp - startTime) / duration,
+                  1,
+                );
+
+                // Вычисляем текущее значение
+                counter.innerText = Math.floor(progress * target);
+
+                // Если анимация не закончена, запрашиваем следующий кадр
+                if (progress < 1) {
+                  window.requestAnimationFrame(step);
+                } else {
+                  counter.innerText = target; // Устанавливаем точное конечное значение
+                }
+              };
+
+              window.requestAnimationFrame(step);
+            });
+
+            // Отключаем наблюдение, чтобы анимация проигралась только один раз
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Начинаем наблюдение за секцией
+      const section = document.querySelector(".stats-section");
+      if (section) {
+        observer.observe(section);
+      }
+
+      // --- ЛОГИКА ПАРАЛЛАКСА ---
+      const parallaxBg = document.querySelector(".stats-bg");
+      const parallaxSection = document.querySelector(".stats-section");
+
+      if (parallaxBg && parallaxSection) {
+        const handleParallax = () => {
+          const rect = parallaxSection.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+
+          // Проверяем, находится ли блок в пределах видимости окна
+          if (rect.top <= windowHeight && rect.bottom >= 0) {
+            // Вычисляем смещение центра блока относительно центра экрана
+            const centerOffset =
+              windowHeight / 2 - (rect.top + rect.height / 2);
+
+            // Коэффициент скорости параллакса (0.4).
+            // Чем меньше число, тем слабее эффект (меньше сдвиг).
+            const yPos = centerOffset * 0.4;
+
+            // Сдвигаем фон с помощью аппаратного ускорения
+            parallaxBg.style.transform = `translateY(${yPos}px)`;
+          }
+        };
+
+        // Оптимизация обработчика скролла через requestAnimationFrame
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              handleParallax();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+
+        // Запускаем один раз при инициализации на случай,
+        // если пользователь обновил страницу, находясь уже на этом блоке
+        handleParallax();
+      }
+    });
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Inter, sans-serif;
+      color: #fff;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .placeholder-wrapper {
+      width: 100%;
+      height: 1000px;
+      padding: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .placeholder-wrapper .placeholder-inner {
+      background-color: #e7edf5;
+      width: 100%;
+      height: 100%;
+      border-radius: 32px;
+
+      color: #88919e;
+      font-size: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ОБНОВЛЕННЫЕ стили секции */
+    .stats-section {
+      background-color: #6a9efc; /* Оставляем как резервный фон */
+      color: #ffffff;
+      padding: 112px 20px;
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      box-sizing: border-box;
+
+      /* Добавленные свойства: */
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* НОВЫЕ стили для параллакс-фона */
+    .stats-bg {
+      position: absolute;
+      top: -30%; /* Выводим фон за верхнюю границу, чтобы было куда скроллить */
+      left: 0;
+      width: 100%;
+      height: 160%; /* Фон должен быть выше блока, чтобы не обрезались края при сдвиге */
+      background-image: url("src/numbers-bg.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      pointer-events: none; /* Чтобы фон не мешал выделять текст */
+    }
+
+    /* ОБНОВЛЕННЫЙ контейнер */
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+
+      /* Добавленные свойства: */
+      position: relative; /* Текст и цифры должны быть поверх фона */
+      z-index: 1;
+    }
+
+    /* Остальные стили (цифры, заголовки, мобильная версия) остаются без изменений */
+
+    /* Заголовок и описание */
+    .stats-header {
+      margin-bottom: 60px;
+      max-width: 650px;
+    }
+
+    .stats-header h2 {
+      font-size: 36px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .stats-header p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Сетка с цифрами */
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .stat-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .stat-number {
+      font-size: 72px;
+      line-height: 1;
+    }
+
+    .stat-suffix {
+      font-size: 48px;
+      margin-left: 8px;
+    }
+
+    /* Разделительная линия */
+    .stat-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      margin: 0 0 20px 0;
+    }
+
+    .stat-desc {
+      font-size: 18px;
+      margin: 0;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      .stats-grid {
+        flex-direction: column;
+        gap: 60px;
+      }
+      .stats-header {
+        text-align: center;
+        margin: 0 auto 50px auto;
+      }
+    }
+  </style>
+</html>
