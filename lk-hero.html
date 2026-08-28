@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hero Section</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #2b66ff;
+        --text-color: #ffffff;
+        --container-max-width: 1360px;
+        --container-padding: 32px;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        background-color: #f5f5f5; /* Фон страницы для контраста */
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-section {
+        width: 100%;
+        max-width: 1920px;
+        background-color: var(--primary-bg);
+        color: var(--text-color);
+        padding: 80px 0 100px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+      /* 
+      .hero-section:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(3, 3, 255, 0.2);
+      } */
+
+      .hero-video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .hero-section .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .container {
+        width: 100%;
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+        box-sizing: border-box;
+      }
+
+      /* Хлебные крошки */
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 64px;
+      }
+
+      .breadcrumbs svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      .breadcrumbs span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Заголовок и описание */
+      .hero-title {
+        font-size: 64px;
+        line-height: 1.1;
+        font-weight: 700;
+        margin: 0 0 24px;
+      }
+
+      .hero-description {
+        font-size: 18px;
+        line-height: 1.5;
+        max-width: 900px;
+        margin: 0 0 48px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* Кнопки */
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 80px;
+      }
+
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 32px;
+        border-radius: 100px;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background-color: #ffffff;
+        color: var(--primary-bg);
+        border: 2px solid #ffffff;
+      }
+
+      .btn-primary:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-outline:hover {
+        border-color: #ffffff;
+      }
+
+      /* Карточки преимуществ */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .feature-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 32px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .feature-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        margin-top: 2px;
+      }
+
+      .feature-content h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 12px;
+      }
+
+      .feature-content p {
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0;
+      }
+
+      /* Адаптивность для меньших экранов */
+      @media (max-width: 1024px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero-title {
+          font-size: 48px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-actions {
+          flex-direction: column;
+        }
+        .btn {
+          width: 100%;
+        }
+        .hero-title {
+          font-size: 36px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero-section">
+      <video class="hero-video-bg" autoplay muted loop playsinline>
+        <source src="src/hero_video_bg.webm" type="video/webm" />
+      </video>
+      <div class="container">
+        <div class="breadcrumbs">
+          <span>
+            <svg viewBox="0 0 24 24">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            Главная
+          </span>
+          <span>></span>
+          <span>Услуги</span>
+          <span>></span>
+          <span>Разработка личных кабинетов</span>
+        </div>
+
+        <h1 class="hero-title">
+          Разработка личных кабинетов<br />для клиентов
+        </h1>
+
+        <p class="hero-description">
+          Создаем личные кабинеты для клиентов, партнеров, дилеров, сотрудников
+          и пользователей сайтов.<br />
+          Объединяем в одном интерфейсе заказы, документы, обращения, оплаты и
+          данные из 1С, CRM и других корпоративных систем.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Обсудить проект</a>
+          <a href="#" class="btn btn-outline">Рассчитать стоимость</a>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            <div class="feature-content">
+              <h3>Готовая технологическая база</h3>
+              <p>
+                Используем уже разработанные базовые механизмы и не начинаем
+                каждый проект с нуля.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            <div class="feature-content">
+              <h3>Интеграция с 1С</h3>
+              <p>
+                Связываем личный кабинет с 1С или той системой, в которой уже
+                работают ваши сотрудники и хранятся данные бизнеса.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <svg class="feature-icon" viewBox="0 0 24 24">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+            <div class="feature-content">
+              <h3>Поэтапная разработка</h3>
+              <p>
+                Разбиваем проект на понятные части и показываем промежуточный
+                результат по ходу работы.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
