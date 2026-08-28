@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Разработка личных кабинетов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Сброс базовых стилей */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #e5e5e5; /* Темный фон для контраста всей страницы, если нужно */
+      }
+
+      /* Главный блок с ограничением в 1920px */
+      .hero-section {
+        width: 100%;
+        max-width: 1920px;
+        margin: 0 auto;
+        background: linear-gradient(180deg, #f4f8ff 43.75%, #deebff 100%);
+        padding: 100px 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 1360px;
+        padding: 0 32px;
+      }
+
+      /* Внутренний контейнер 1360px с отступами 32px (ширина контента 1296px) */
+      .container {
+        width: 100%;
+        /* max-width: 1360px;
+        padding: 0 32px; */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      /* Левая колонка с контентом */
+      .hero-content {
+        flex: 1;
+        /* max-width: 630px; */
+      }
+
+      /* Хлебные крошки */
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 40px;
+      }
+
+      .breadcrumbs svg {
+        width: 14px;
+        height: 14px;
+        fill: #6b7280;
+      }
+
+      .breadcrumbs span {
+        margin: 0 4px;
+      }
+
+      /* Заголовок */
+      .hero-title {
+        font-size: 72px;
+        font-weight: 700;
+        line-height: 1.15;
+        color: #252b37;
+        margin-bottom: 32px;
+      }
+
+      /* Текстовые абзацы */
+      .hero-text {
+        font-size: 20px;
+
+        line-height: 1.6;
+        color: #717680;
+        margin-bottom: 8px;
+      }
+
+      /* Блок с кнопками */
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 40px;
+      }
+
+      /* Общие стили кнопок */
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 32px;
+        border-radius: 40px;
+        font-size: 15px;
+        font-weight: 500;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      /* Залитая кнопка */
+      .btn-primary {
+        background-color: #5492ff;
+        color: #ffffff;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        background-color: #437ce6;
+      }
+
+      /* Кнопка с пунктирной обводкой */
+      .btn-outline {
+        background-color: transparent;
+        color: #5492ff;
+        border: 1px solid #5492ff;
+      }
+
+      .btn-outline:hover {
+        background-color: rgba(84, 146, 255, 0.05);
+      }
+
+      /* Правая колонка с визуалом */
+      .hero-visual {
+        /* flex: 1;
+        display: flex;
+        justify-content: flex-end; */
+      }
+
+      /* Синий прямоугольник (заглушка) */
+      .blue-box {
+        position: relative;
+        overflow: hidden;
+        width: 500px;
+        height: 600px;
+        background-color: #6784ff;
+        background: url(src/blue-bg.png);
+        border-radius: 32px;
+      }
+
+      /* Абсолютно позиционированные слои (картинки) внутри blue-box */
+      .parallax-item {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: auto;
+        will-change: transform; /* подсказка браузеру для плавной анимации */
+        /* Тень по контуру прозрачной PNG-картинки, а не по прямоугольнику элемента */
+        filter: drop-shadow(-10px 14px 20px rgba(0, 0, 0, 0.07));
+      }
+
+      /* Позиция и размер каждого слоя.
+         При замене плейсхолдеров на реальные <img> добавьте для них:
+         object-fit: cover; (размеры наследуются от позиционирования ниже) */
+      .parallax-item--1 {
+        top: 116px;
+        left: 50px;
+        width: 211px;
+        height: auto;
+      }
+
+      .parallax-item--2 {
+        top: 50px;
+        left: 230px;
+        width: 210px;
+        height: auto;
+      }
+
+      .parallax-item--3 {
+        top: 275px;
+        left: 134px;
+        width: 274px;
+        height: auto;
+      }
+
+      .parallax-item--4 {
+        top: 485px;
+        left: 130px;
+        width: 67px;
+        height: auto;
+      }
+
+      /* Адаптивность для меньших экранов */
+      @media (max-width: 992px) {
+        .container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .hero-content {
+          max-width: 100%;
+        }
+
+        .breadcrumbs {
+          justify-content: center;
+        }
+
+        .hero-actions {
+          justify-content: center;
+        }
+
+        .hero-visual {
+          justify-content: center;
+          width: 100%;
+          margin-top: 40px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero-title {
+          font-size: 36px;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero-section">
+      <div class="wrapper">
+        <div class="breadcrumbs">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+          </svg>
+          Главная <span>></span> Услуги <span>></span> Разработка личных
+          кабинетов
+        </div>
+        <div class="container">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Разработка<br />личных кабинетов<br />для клиентов
+            </h1>
+
+            <p class="hero-text">
+              Объединяем в одном интерфейсе заказы, документы, обращения, оплаты
+              и данные из 1С, CRM и других корпоративных систем.
+            </p>
+            <p class="hero-text">
+              Создаем личные кабинеты для клиентов, партнеров, дилеров,
+              сотрудников и пользователей сайтов.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary">Обсудить проект</button>
+              <button class="btn btn-outline">Рассчитать стоимость</button>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+<div class="blue-box">
+            <img
+              class="parallax-item parallax-item--1"
+              src="src/hero-asset-chart.png"
+              alt=""
+            />
+            <img
+              class="parallax-item parallax-item--2"
+              src="src/hero-asset-calendar.png"
+              alt=""
+            />
+            <img
+              class="parallax-item parallax-item--3"
+              src="src/hero-asset-cart.png"
+              alt=""
+            />
+            <img
+              class="parallax-item parallax-item--4"
+              src="src/hero-asset-cursor.png"
+              alt=""
+            />
+          </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Эффект параллакса: слои внутри .blue-box плавно сдвигаются вслед за курсором
+      const parallaxBox = document.querySelector(".blue-box");
+      const parallaxItems = document.querySelectorAll(".parallax-item");
+
+      // Максимальный сдвиг (px) для каждого слоя: чем больше — тем «ближе» слой
+      const maxShift = [10, 16, 24, 32];
+
+      // Отключаем эффект, если пользователь предпочитает уменьшенное движение
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (parallaxBox && parallaxItems.length && !prefersReducedMotion) {
+        let currentX = 0;
+        let currentY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let frameId = null;
+        // Браузер «выстреливает» mousemove при загрузке страницы (курсор уже
+        // находится над ней) — это не реальное движение. Игнорируем первый
+        // вызов, чтобы картинки оставались в исходных позициях до первого
+        // настоящего движения курсора.
+        let isInitialized = false;
+
+        document.addEventListener("mousemove", (event) => {
+          if (!isInitialized) {
+            isInitialized = true;
+            return;
+          }
+
+          // Позиция курсора относительно центра вьюпорта, нормализованная
+          // в диапазон -1..1 (эффект работает по всей странице, а не только
+          // внутри blue-box)
+          const x = (event.clientX / window.innerWidth) * 2 - 1;
+          const y = (event.clientY / window.innerHeight) * 2 - 1;
+
+          targetX = x;
+          targetY = y;
+
+          if (frameId === null) {
+            animate();
+          }
+        });
+
+        function animate() {
+          // Плавная интерполяция текущих значений к целевым
+          currentX += (targetX - currentX) * 0.1;
+          currentY += (targetY - currentY) * 0.1;
+
+          parallaxItems.forEach((item, index) => {
+            const shift = maxShift[index] || 0;
+            item.style.transform = `translate3d(${(currentX * shift).toFixed(2)}px, ${(
+              currentY * shift
+            ).toFixed(2)}px, 0)`;
+          });
+
+          // Завершаем цикл, когда позиции сошлись с целевыми
+          if (
+            Math.abs(targetX - currentX) < 0.001 &&
+            Math.abs(targetY - currentY) < 0.001
+          ) {
+            currentX = targetX;
+            currentY = targetY;
+            frameId = null;
+            return;
+          }
+
+          frameId = requestAnimationFrame(animate);
+        }
+      }
+    </script>
+  </body>
+</html>
