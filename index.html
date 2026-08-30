@@ -1,150 +1,387 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Бесплатный аудит</title>
+    <title>Hero Section</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #2b66ff;
+        --text-color: #ffffff;
+        --container-max-width: 1360px;
+        --container-padding: 32px;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+        background-color: #f5f5f5; /* Фон страницы для контраста */
+        display: flex;
+        justify-content: center;
+      }
+
+      .hero-section {
+        width: 100%;
+        max-width: 1920px;
+        background-color: var(--primary-bg);
+        background-image: url("src/hero-bg.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: var(--text-color);
+        padding: 80px 0 100px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+      /* 
+      .hero-section:after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(3, 3, 255, 0.2);
+      } */
+
+      .hero-section .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .container {
+        width: 100%;
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+        box-sizing: border-box;
+      }
+
+      /* Хлебные крошки */
+      .breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 64px;
+      }
+
+      .breadcrumbs svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+      }
+
+      .breadcrumbs span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Заголовок и описание */
+      .hero-title {
+        font-size: 64px;
+        line-height: 1.1;
+        font-weight: 700;
+        margin: 0 0 24px;
+      }
+
+      /* Печатающийся текст в заголовке */
+      .typewriter {
+        display: inline-block;
+        min-width: 6.2em; /* ширина самого длинного слова "пользователей" — чтобы текст не прыгал */
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .typewriter-cursor {
+        display: inline-block;
+        width: 4px;
+        height: 0.9em;
+        margin-left: 4px;
+        background-color: currentColor;
+        vertical-align: baseline;
+        animation: cursor-blink 0.8s step-end infinite;
+      }
+
+      @keyframes cursor-blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero-description {
+        font-size: 18px;
+        line-height: 1.5;
+        max-width: 900px;
+        margin: 0 0 48px;
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      /* Кнопки */
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 64px;
+      }
+
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px 32px;
+        border-radius: 100px;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn-primary {
+        background-color: #ffffff;
+        color: var(--primary-bg);
+        border: 2px solid #ffffff;
+      }
+
+      .btn-primary:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-outline:hover {
+        border-color: #ffffff;
+      }
+
+      /* Карточки преимуществ */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+
+      .feature-card {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+
+        border-radius: var(--Num-5, 20px);
+        background: rgba(82, 125, 255, 0.42);
+        backdrop-filter: blur(20px);
+      }
+
+      .icon-container {
+        display: flex;
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 12px;
+        background: rgba(82, 125, 255, 0.6);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+        aspect-ratio: 1/1;
+      }
+
+      .feature-content h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 12px;
+      }
+
+      .feature-content p {
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0;
+      }
+
+      /* Адаптивность для меньших экранов */
+      @media (max-width: 1024px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .hero-title {
+          font-size: 48px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-actions {
+          flex-direction: column;
+        }
+        .btn {
+          width: 100%;
+        }
+        .hero-title {
+          font-size: 36px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="placeholder-wrapper">
-      <div class="placeholder-inner">Прокрутите страницу вниз</div>
-    </div>
-    <div class="banner-wrapper">
-      <div class="banner-container">
-        <div class="banner-text">
-          <div class="banner-title">Бесплатный аудит перехода с 1С:УПП</div>
-          <div class="banner-descr">
-            Проведем предварительный анализ текущей системы, определим возможные
-            сценарии&nbsp;перехода и подготовим рекомендации по внедрению.
+    <section class="hero-section">
+      <div class="container">
+        <div class="breadcrumbs">
+          <span>
+            <svg viewBox="0 0 24 24">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            Главная
+          </span>
+          <span>></span>
+          <span>Услуги</span>
+          <span>></span>
+          <span>Разработка личных кабинетов</span>
+        </div>
+
+        <h1 class="hero-title">
+          Разработка личных кабинетов<br />для
+          <span class="typewriter"
+            ><span id="typewriter">клиентов</span
+            ><span class="typewriter-cursor" aria-hidden="true"></span
+          ></span>
+        </h1>
+
+        <p class="hero-description">
+          Создаем личные кабинеты для B2B- и B2C-клиентов.<br />
+          Объединяем в одном интерфейсе заказы, документы, обращения, оплаты и
+          данные из 1С, CRM и других корпоративных систем.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Обсудить проект</a>
+          <a href="#" class="btn btn-outline">Рассчитать стоимость</a>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="icon-container">
+              <img class="feature-icon" src="src/icon-1.png" alt="" />
+            </div>
+            <div class="feature-content">
+              <h3>Готовая технологическая база</h3>
+              <p>
+                Используем уже разработанные базовые механизмы и не начинаем
+                каждый проект с нуля.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-container">
+              <img class="feature-icon" src="src/icon-2.png" alt="" />
+            </div>
+
+            <div class="feature-content">
+              <h3>Интеграция с 1С</h3>
+              <p>
+                Связываем личный кабинет с 1С или той системой, в которой уже
+                работают ваши сотрудники и хранятся данные бизнеса.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-container">
+              <img class="feature-icon" src="src/icon-3.png" alt="" />
+            </div>
+            <div class="feature-content">
+              <h3>Поэтапная разработка</h3>
+              <p>
+                Разбиваем проект на понятные части и показываем промежуточный
+                результат по ходу работы.
+              </p>
+            </div>
           </div>
         </div>
-        <button class="banner-btn">Заказать аудит</button>
       </div>
-      <!-- <div class="illustration-wrapper">
-      
-      </div> -->
-      <img class="banner-illustration" src="src/laptop-podium.png" alt="" />
-    </div>
+    </section>
 
-    <div class="placeholder-wrapper">
-      <div class="placeholder-inner"></div>
-    </div>
+    <script>
+      (function () {
+        var words = [
+          "клиентов",
+          "партнеров",
+          "дилеров",
+          "сотрудников",
+          "пользователей",
+        ];
+        var el = document.getElementById("typewriter");
+        var wordIndex = 0;
+        var charIndex = el.textContent.length; // стартуем с уже напечатанного слова
+        var deleting = false;
+
+        var TYPE_SPEED = 90; // мс на символ при наборе
+        var DELETE_SPEED = 50; // мс на символ при стирании
+        var HOLD_TIME = 2200; // мс пауза с показанным словом
+        var EMPTY_TIME = 400; // мс пауза, когда слово полностью стёрто
+
+        function tick() {
+          var word = words[wordIndex];
+
+          if (!deleting) {
+            charIndex++;
+            el.textContent = word.slice(0, charIndex);
+
+            if (charIndex >= word.length) {
+              deleting = true;
+              setTimeout(tick, HOLD_TIME);
+              return;
+            }
+            setTimeout(tick, TYPE_SPEED);
+          } else {
+            charIndex--;
+            el.textContent = word.slice(0, charIndex);
+
+            if (charIndex <= 0) {
+              deleting = false;
+              wordIndex = (wordIndex + 1) % words.length;
+              setTimeout(tick, EMPTY_TIME);
+              return;
+            }
+            setTimeout(tick, DELETE_SPEED);
+          }
+        }
+
+        // Перед первым стиранием — пауза, чтобы стартовое слово «клиентов» показалось
+        setTimeout(function () {
+          deleting = true;
+          tick();
+        }, HOLD_TIME);
+      })();
+    </script>
   </body>
-  <script>
-    const illustration = document.querySelector(".banner-illustration");
-    const banner = document.querySelector(".banner-wrapper");
-
-    window.addEventListener("scroll", () => {
-      const rect = banner.getBoundingClientRect();
-
-      // скорость parallax
-      const speed = 0.25;
-
-      // смещение относительно viewport
-      const offset = rect.top * speed;
-
-      illustration.style.transform = `translateY(${offset}px)`;
-    });
-  </script>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Inter, sans-serif;
-      color: #fff;
-    }
-
-    body {
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .placeholder-wrapper {
-      width: 100%;
-      height: 1000px;
-      padding: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .placeholder-wrapper .placeholder-inner {
-      background-color: #e7edf5;
-      width: 100%;
-      height: 100%;
-      border-radius: 32px;
-
-      color: #88919e;
-      font-size: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .banner-wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      padding: 112px 0;
-      background: linear-gradient(320deg, #08216b 14.82%, #1a3da4 81.1%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .banner-illustration {
-      position: absolute;
-      right: 300px;
-      top: 0px;
-      height: auto;
-      width: 600px;
-    }
-
-    .banner-container {
-      padding: 0 32px;
-      max-width: 1360px;
-      width: 100%;
-    }
-
-    .banner-wrapper .banner-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 32px;
-    }
-
-    .banner-wrapper .banner-container .banner-text {
-      max-width: 800px;
-    }
-
-    .banner-wrapper .banner-container .banner-title {
-      font-size: 30px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 120%;
-      margin-bottom: 12px;
-    }
-
-    .banner-wrapper .banner-container .banner-descr {
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 140%;
-    }
-
-    .banner-wrapper .banner-container .banner-btn {
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: 150%;
-      padding: 12px 20px;
-      justify-content: center;
-      align-items: center;
-      border-radius: 64px;
-      background-color: #fff;
-      color: #252b37;
-      outline: none;
-      border: none;
-    }
-  </style>
 </html>
