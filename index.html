@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="tech-stack">
+      <div class="tech-stack__container">
+        <div class="tech-stack__content">
+          <div class="tech-stack__label">ТЕХНОЛОГИЧЕСКИЙ СТЕК</div>
+
+          <h2 class="tech-stack__title">
+            Технологии для разработки<br />
+            личного кабинета
+          </h2>
+
+          <p class="tech-stack__description">
+            Используем Laravel, Vue.js, JavaScript и TypeScript. Этот стек
+            подходит для разработки личных кабинетов, интеграций с
+            корпоративными системами и дальнейшего развития проекта.
+          </p>
+        </div>
+
+        <!-- Визуальная область с логотипами -->
+        <div class="tech-stack__visual">
+          <img
+            class="tech-logo tech-logo--laravel"
+            src="src/logo-laravel.svg"
+            alt="Laravel"
+          />
+
+          <img
+            class="tech-logo tech-logo--php"
+            src="src/logo-php.svg"
+            alt="PHP"
+          />
+
+          <img
+            class="tech-logo tech-logo--vue"
+            src="src/logo-vue.svg"
+            alt="Vue.js"
+          />
+
+          <img
+            class="tech-logo tech-logo--js"
+            src="src/logo-js.svg"
+            alt="JavaScript"
+          />
+        </div>
+
+        <div class="tech-stack__line"></div>
+      </div>
+    </section>
+  </body>
+</html>
+<style>
+  .tech-stack {
+    width: 100%;
+    padding: 80px 24px 0;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .tech-stack__container {
+    position: relative;
+
+    width: 100%;
+    max-width: 1380px;
+    min-height: 330px;
+
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  /* --------------------------------
+   Текст
+-------------------------------- */
+
+  .tech-stack__content {
+    position: relative;
+    z-index: 2;
+
+    width: 63%;
+  }
+
+  .tech-stack__label {
+    margin-bottom: 18px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+
+    color: #aeb2bc;
+    text-transform: uppercase;
+  }
+
+  .tech-stack__title {
+    margin: 0 0 22px;
+
+    font-family: Arial, sans-serif;
+    font-size: 52px;
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+
+    color: #292e3b;
+  }
+
+  .tech-stack__description {
+    max-width: 830px;
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 400;
+
+    color: #5b616d;
+  }
+
+  /* --------------------------------
+   Область с логотипами
+-------------------------------- */
+
+  .tech-stack__visual {
+    position: absolute;
+
+    /*
+    Размер визуальной области.
+    Все логотипы внутри нее позиционируются
+    относительно этого блока.
+  */
+    right: 0;
+    bottom: 2px;
+
+    width: 500px;
+    height: 300px;
+
+    z-index: 3;
+  }
+
+  /* Общие настройки логотипов */
+
+  .tech-logo {
+    position: absolute;
+
+    display: block;
+
+    object-fit: contain;
+
+    user-select: none;
+    pointer-events: none;
+
+    /*
+    Финальный наклон задается отдельным свойством rotate,
+    поэтому сохраняется даже без анимации
+    (например, при prefers-reduced-motion).
+  */
+    rotate: var(--logo-rotate, 0deg);
+
+    /*
+    Анимация падения сверху.
+    Позиция и вращение анимируются независимыми
+    свойствами translate и rotate — у них разные кривые:
+
+    --fall-from   — стартовая высота
+    --fall-rotate — стартовый наклон
+    --bounce      — высота отскока
+    --logo-rotate — финальный наклон
+  */
+    opacity: 0;
+    animation: tech-logo-fall 1s forwards;
+  }
+
+  @keyframes tech-logo-fall {
+    0% {
+      opacity: 0;
+
+      /* Падение: непрерывный разгон как при свободном падении */
+      translate: 0 var(--fall-from, -320px);
+      rotate: var(--fall-rotate, 0deg);
+
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Вращение: кувырок ускоряется... */
+    45% {
+      rotate: calc(
+        var(--fall-rotate, 0deg) +
+          (var(--logo-rotate, 0deg) - var(--fall-rotate, 0deg)) * 0.8
+      );
+
+      animation-timing-function: cubic-bezier(0.15, 0.67, 0.3, 1);
+    }
+
+    55% {
+      opacity: 1;
+    }
+
+    /* Удар о поверхность */
+    70% {
+      translate: 0 0;
+      rotate: var(--logo-rotate, 0deg);
+
+      /* Подскок: быстрый отрыв, нулевая скорость в верхней точке */
+      animation-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    /* Верхняя точка отскока */
+    85% {
+      translate: 0 var(--bounce, -18px);
+
+      /* Возврат вниз с ускорением */
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Укладка на место */
+    100% {
+      opacity: 1;
+      translate: 0 0;
+      rotate: var(--logo-rotate, 0deg);
+    }
+  }
+
+  /*
+  Анимация для «упругих» логотипов:
+  падение и несколько затухающих отскоков.
+  Высоты отскоков задаются через
+  --bounce-1, --bounce-2 и --bounce-3.
+*/
+  @keyframes tech-logo-fall-bouncy {
+    0% {
+      opacity: 0;
+
+      /* Падение: непрерывный разгон как при свободном падении */
+      translate: 0 var(--fall-from, -320px);
+      rotate: var(--fall-rotate, 0deg);
+
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Вращение: кувырок ускоряется... */
+    45% {
+      rotate: calc(
+        var(--fall-rotate, 0deg) +
+          (var(--logo-rotate, 0deg) - var(--fall-rotate, 0deg)) * 0.8
+      );
+
+      animation-timing-function: cubic-bezier(0.15, 0.67, 0.3, 1);
+    }
+
+    55% {
+      opacity: 1;
+    }
+
+    /* Первый удар о поверхность */
+    62% {
+      translate: 0 0;
+      rotate: var(--logo-rotate, 0deg);
+
+      animation-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    /* Первый (высокий) отскок */
+    72% {
+      translate: 0 var(--bounce-1, -26px);
+
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Второй удар */
+    80% {
+      translate: 0 0;
+
+      animation-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    /* Второй (низкий) отскок */
+    87% {
+      translate: 0 var(--bounce-2, -12px);
+
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Третий удар */
+    93% {
+      translate: 0 0;
+
+      animation-timing-function: cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    /* Третий (совсем маленький) отскок */
+    97% {
+      translate: 0 var(--bounce-3, -5px);
+
+      animation-timing-function: cubic-bezier(0.33, 0, 0.67, 0.33);
+    }
+
+    /* Окончательная укладка */
+    100% {
+      opacity: 1;
+      translate: 0 0;
+      rotate: var(--logo-rotate, 0deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tech-logo {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  /* --------------------------------
+   Laravel
+-------------------------------- */
+
+  .tech-logo--laravel {
+    width: 136px;
+    height: 136px;
+
+    /*
+    Позиция Laravel.
+    Можно свободно менять:
+    
+    left
+    top
+    transform
+    width / height
+  */
+    right: 199px;
+    bottom: 133px;
+
+    --fall-from: -340px;
+
+    --fall-rotate: 18deg;
+
+    /* Упругое падение: несколько затухающих отскоков */
+    --bounce-1: -28px;
+    --bounce-2: -12px;
+    --bounce-3: -5px;
+    animation-name: tech-logo-fall-bouncy;
+    animation-duration: 1.4s;
+    animation-delay: 0.7s;
+  }
+
+  /* --------------------------------
+   PHP
+-------------------------------- */
+
+  .tech-logo--php {
+    width: 205px;
+    height: 205px;
+
+    right: 0;
+    bottom: 0px;
+
+    --fall-from: -300px;
+
+    --fall-rotate: -14deg;
+
+    --bounce: -22px;
+    animation-delay: 0.1s;
+  }
+
+  /* --------------------------------
+   Vue
+-------------------------------- */
+
+  .tech-logo--vue {
+    width: 195px;
+    height: 195px;
+
+    right: 214px;
+    bottom: -18px;
+
+    --logo-rotate: 27deg;
+    --fall-from: -380px;
+
+    --fall-rotate: 55deg;
+
+    --bounce: -18px;
+    animation-delay: 0.3s;
+  }
+
+  /* --------------------------------
+   JavaScript
+-------------------------------- */
+
+  .tech-logo--js {
+    width: 90px;
+    height: 90px;
+
+    right: 361px;
+    bottom: 7px;
+
+    --logo-rotate: -27deg;
+    --fall-from: -280px;
+
+    --fall-rotate: -12deg;
+
+    --bounce: -10px;
+    animation-delay: 0.5s;
+  }
+
+  /* --------------------------------
+   Нижняя линия
+-------------------------------- */
+
+  .tech-stack__line {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 2px;
+
+    background: #5c9eff;
+  }
+
+  /* --------------------------------
+   Планшет
+-------------------------------- */
+
+  @media (max-width: 1100px) {
+    .tech-stack__title {
+      font-size: 42px;
+    }
+
+    .tech-stack__description {
+      font-size: 18px;
+    }
+
+    .tech-stack__content {
+      width: 60%;
+    }
+
+    .tech-stack__visual {
+      width: 420px;
+      height: 270px;
+    }
+
+    .tech-logo--php {
+      width: 185px;
+      height: 185px;
+    }
+
+    .tech-logo--vue {
+      width: 160px;
+      height: 160px;
+    }
+
+    .tech-logo--laravel {
+      width: 120px;
+      height: 120px;
+      left: 80px;
+    }
+
+    .tech-logo--js {
+      width: 75px;
+      height: 75px;
+    }
+  }
+
+  /* --------------------------------
+   Мобильные
+-------------------------------- */
+
+  @media (max-width: 768px) {
+    .tech-stack {
+      padding: 50px 20px 0;
+    }
+
+    .tech-stack__container {
+      min-height: 0;
+      padding-bottom: 30px;
+    }
+
+    .tech-stack__content {
+      width: 100%;
+    }
+
+    .tech-stack__label {
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .tech-stack__title {
+      font-size: 34px;
+      line-height: 1.12;
+      margin-bottom: 18px;
+    }
+
+    .tech-stack__description {
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    /*
+    На мобильном визуальная область
+    становится обычным блоком после текста.
+  */
+    .tech-stack__visual {
+      position: relative;
+
+      top: auto;
+      right: auto;
+
+      width: 100%;
+      max-width: 480px;
+      height: 270px;
+
+      margin: 35px auto 0;
+    }
+
+    .tech-stack__line {
+      position: relative;
+
+      left: auto;
+      right: auto;
+      bottom: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tech-stack__title {
+      font-size: 30px;
+    }
+
+    .tech-stack__visual {
+      height: 230px;
+    }
+
+    .tech-logo--php {
+      width: 150px;
+      height: 150px;
+
+      right: 0;
+      top: 55px;
+    }
+
+    .tech-logo--vue {
+      width: 135px;
+      height: 135px;
+
+      left: 55px;
+      top: 65px;
+    }
+
+    .tech-logo--laravel {
+      width: 95px;
+      height: 95px;
+
+      left: 75px;
+      top: 0;
+    }
+
+    .tech-logo--js {
+      width: 65px;
+      height: 65px;
+
+      left: 10px;
+      bottom: 0;
+    }
+  }
+</style>
