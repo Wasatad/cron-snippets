@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Расчёт стоимости проекта</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="cost-section">
+        <div class="cost-layout">
+          <div class="cost-info">
+            <div class="cost-heading">
+              <p class="cost-caption">Примерная стоимость проекта</p>
+              <h1 class="cost-value">1 250 000 ₽</h1>
+
+              <p class="cost-note">
+                <span>*</span>
+                Предоставленный расчет стоимости — ориентировочный. Точная смета
+                проекта будет предоставлена после консультации со специалистом
+              </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="included">
+              <h2 class="included-title">
+                <span
+                  class="info-icon"
+                  tabindex="0"
+                  role="note"
+                  aria-label="Лицензии 1С рассчитываются отдельно в зависимости от выбранной конфигурации"
+                  data-tooltip="Лицензии 1С рассчитываются отдельно в зависимости от выбранной конфигурации"
+                  >i</span
+                >
+                Что входит в стоимость
+              </h2>
+
+              <div class="included-columns">
+                <div class="included-scroll">
+                  <!-- Список заполняется динамически из TEST_ITEMS (см. скрипт внизу страницы) -->
+                  <ul class="included-list"></ul>
+                </div>
+                <span class="included-scroll-hint">Листайте вниз</span>
+              </div>
+            </div>
+
+            <button class="restart-button" type="button">
+              <span class="restart-icon">↻</span>
+              Пройти расчет заново
+            </button>
+          </div>
+
+          <aside class="contact-card">
+            <h2 class="contact-title">
+              Хотите получить подробный&nbsp;расчет?
+            </h2>
+
+            <p class="contact-description">
+              Оставьте свои контакты, наши специалисты свяжутся<br />
+              с вами, ответят на все вопросы и подготовят<br />
+              коммерческое предложение
+            </p>
+
+            <form class="contact-form">
+              <label class="field">
+                <span>Ваше имя <b>*</b></span>
+                <input type="text" name="name" required />
+              </label>
+
+              <label class="field">
+                <span>Телефон <b>*</b></span>
+                <input type="tel" name="phone" required />
+              </label>
+
+              <label class="field">
+                <span>Email</span>
+                <input type="email" name="email" />
+              </label>
+
+              <label class="consent">
+                <input type="checkbox" name="consent" required />
+                <span class="custom-checkbox"></span>
+
+                <span class="consent-text">
+                  Я даю свое согласие на обработку
+                  <a href="#">персональных данных</a>
+                  и соглашаюсь с условиями
+                  <a href="#">политики конфиденциальности</a>
+                </span>
+              </label>
+
+              <button class="submit-button" type="submit">
+                Отправить заявку
+              </button>
+            </form>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  :root {
+    --blue: #4d98ef;
+    --blue-light: #eaf4ff;
+    --text: #29313d;
+    --muted: #9fa5ad;
+    --border: #d5d9de;
+    --green: #3dcb91;
+    --page-bg: #ffffff;
+    --outer-bg: #f5f7fb;
+    --card-bg: #f3f8ff;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    color: var(--text);
+    background: var(--page-bg);
+    font-family: "Inter", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+
+  button {
+    border: 0;
+    cursor: pointer;
+  }
+
+  .page {
+    padding: 112px 0;
+  }
+
+  .cost-section {
+    width: min(1312px, calc(100% - 48px));
+    min-height: 854px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 40px;
+    background: var(--outer-bg);
+  }
+
+  .cost-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 452px;
+    gap: 56px;
+    min-height: 774px;
+    padding: 80px;
+    border-radius: 20px;
+    background: #fff;
+  }
+
+  .cost-info {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    padding-bottom: 32px;
+  }
+
+  .cost-caption {
+    margin: 0 0 22px;
+    color: var(--text);
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .cost-value {
+    margin: 0;
+    color: var(--blue);
+    font-size: 49px;
+    font-weight: 600;
+    letter-spacing: -1.8px;
+    line-height: 1.1;
+  }
+
+  .cost-note {
+    max-width: 520px;
+    margin: 15px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .cost-note span {
+    color: #ed5b59;
+    font-weight: 700;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    margin: 32px 0px;
+    background: #e5e7ea;
+  }
+
+  .included-title {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin: 0 0 25px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .info-icon {
+    position: relative;
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #adb3ba;
+    border-radius: 50%;
+    color: #8d959d;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: help;
+    outline: none;
+  }
+
+  /* --- Tooltip (CSS-only, via data-attribute) --- */
+
+  .info-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    z-index: 20;
+    width: max-content;
+    max-width: 264px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #29313d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(4px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0.2s;
+  }
+
+  /* Arrow */
+  .info-icon::before {
+    content: "";
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    z-index: 21;
+    width: 10px;
+    height: 10px;
+    background: #29313d;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-50%) rotate(45deg);
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s;
+  }
+
+  .info-icon:hover::after,
+  .info-icon:focus-visible::after,
+  .info-icon:hover::before,
+  .info-icon:focus-visible::before {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .info-icon:hover::after,
+  .info-icon:focus-visible::after {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .included-columns {
+    position: relative;
+    /* Fixed height: if even two columns are not enough,
+       the block scrolls instead of stretching */
+    height: 232px;
+  }
+
+  /* Fade-out at the bottom — hints there is more content below.
+     Lives on the wrapper (not the scroller) so it stays put
+     while the content scrolls underneath */
+  .included-columns::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 70%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Visible only while the block is scrollable
+     and not scrolled to the very bottom */
+  .included-columns.is-scrollable:not(.is-at-bottom)::after {
+    opacity: 1;
+  }
+
+  /* "Scroll down" pill with a bouncing arrow */
+  .included-scroll-hint {
+    position: absolute;
+    z-index: 1;
+    bottom: 10px;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(41, 49, 61, 0.16);
+    color: #6b7480;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 120%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 0.25s ease;
+  }
+
+  .included-columns.is-scrollable:not(.is-at-bottom) .included-scroll-hint {
+    opacity: 1;
+  }
+
+  .included-scroll-hint::after {
+    content: "↓";
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    animation: hint-bounce 1.2s ease-in-out infinite;
+  }
+
+  @keyframes hint-bounce {
+    0%,
+    100% {
+      transform: translateY(-1px);
+    }
+    50% {
+      transform: translateY(2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .included-scroll-hint::after {
+      animation: none;
+    }
+  }
+
+  .included-scroll {
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c9d2dc transparent;
+  }
+
+  .included-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .included-scroll::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: #c9d2dc;
+  }
+
+  .included-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .included-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .included-list li {
+    position: relative;
+    min-height: 20px;
+    padding-left: 32px;
+    margin-bottom: 14px;
+    color: #454b54;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .included-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .included-list li::before {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    display: flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--green);
+    border-radius: 50%;
+    color: var(--green);
+    content: "✓";
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .restart-button {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+    border-radius: 28px;
+    color: #438fdf;
+    background: var(--blue-light);
+    font-size: 16px;
+    font-weight: 600;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .restart-button:hover {
+    background: #dceeff;
+  }
+
+  .restart-button:active,
+  .submit-button:active {
+    transform: translateY(1px);
+  }
+
+  .restart-icon {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .contact-card {
+    align-self: start;
+    min-height: 614px;
+    padding: 34px 32px 31px;
+    border: 1px solid #e2eaf3;
+    border-radius: 20px;
+    background: var(--card-bg);
+  }
+
+  .contact-title {
+    margin: 0;
+    color: #29313d;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.25;
+  }
+
+  .contact-description {
+    margin: 11px 0 25px;
+    color: #737c87;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .field span {
+    color: #3e4650;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .field b {
+    color: #e25555;
+    font-weight: 500;
+  }
+
+  .field input {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #ccd2d9;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: var(--text);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .field input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(77, 152, 239, 0.14);
+  }
+
+  .consent {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: -1px;
+    cursor: pointer;
+  }
+
+  .consent input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .custom-checkbox {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border: 1px solid #cdd3da;
+    border-radius: 5px;
+    background: #fff;
+  }
+
+  .consent input:checked + .custom-checkbox {
+    border-color: var(--blue);
+    background: var(--blue);
+  }
+
+  .consent input:checked + .custom-checkbox::after {
+    display: block;
+    width: 5px;
+    height: 9px;
+    margin: 3px 0 0 6px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    content: "";
+    transform: rotate(45deg);
+  }
+
+  .consent-text {
+    color: #69737e;
+    font-size: 13px;
+    line-height: 1.3;
+  }
+
+  .consent-text a {
+    color: #4b96e9;
+    text-decoration: none;
+  }
+
+  .consent-text a:hover {
+    text-decoration: underline;
+  }
+
+  .submit-button {
+    width: 100%;
+    height: 50px;
+    margin-top: 43px;
+    border-radius: 28px;
+    color: #fff;
+    background: var(--blue);
+    font-size: 16px;
+    font-weight: 600;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .submit-button:hover {
+    background: #3989e6;
+  }
+
+  @media (max-width: 1200px) {
+    .cost-layout {
+      grid-template-columns: minmax(0, 1fr) 400px;
+      gap: 36px;
+      padding: 56px;
+    }
+
+    .cost-section {
+      padding: 28px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .page {
+      padding: 32px 0;
+    }
+
+    .cost-section {
+      width: min(100% - 32px, 680px);
+      min-height: auto;
+      padding: 16px;
+      border-radius: 24px;
+    }
+
+    .cost-layout {
+      display: flex;
+      min-height: auto;
+      flex-direction: column;
+      gap: 40px;
+      padding: 32px 24px;
+    }
+
+    .contact-card {
+      width: 100%;
+    }
+
+    .restart-button {
+      margin-top: 40px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .page {
+      padding: 16px 0;
+    }
+
+    .cost-section {
+      width: calc(100% - 20px);
+      padding: 8px;
+      border-radius: 18px;
+    }
+
+    .cost-layout {
+      gap: 32px;
+      padding: 28px 16px;
+      border-radius: 14px;
+    }
+
+    .cost-value {
+      font-size: 37px;
+      letter-spacing: -1.2px;
+    }
+
+    .cost-caption {
+      font-size: 17px;
+    }
+
+    .included-scroll {
+      /* On mobile the list flows naturally with the page */
+      height: auto;
+      overflow-y: visible;
+    }
+
+    .included-columns::after,
+    .included-scroll-hint {
+      display: none;
+    }
+
+    .contact-card {
+      min-height: auto;
+      padding: 26px 20px 24px;
+      border-radius: 16px;
+    }
+
+    .contact-title {
+      font-size: 22px;
+    }
+
+    .contact-description br {
+      display: none;
+    }
+
+    .submit-button {
+      margin-top: 32px;
+    }
+  }
+</style>
+
+<script>
+  // ============================================================
+  // Тестовый стенд: имитация получения пунктов с сервера
+  // и их динамической подстановки в .included-columns
+  //
+  // Как тестировать: редактируйте массив TEST_ITEMS ниже и
+  // обновляйте страницу. Если пункты не помещаются в блок —
+  // список скроллится, внизу появляются fade-out и подсказка
+  // «Листайте вниз».
+  // ============================================================
+
+  // Вставляйте сюда любой набор пунктов (поддерживается <br>,
+  // высота пунктов может быть любой)
+  const TEST_ITEMS = [
+    "Предпроектное обследование и сбор требований",
+    "Перенос начальных данных",
+    "Настройка интеграций и обменов",
+    "Тестирование и подготовка к запуску",
+    "Проектная документация",
+    "Обучение пользователей",
+    "Проектная документация",
+    "Проектная документация",
+    "Обучение пользователей",
+    "Проектная документация",
+    "Перенос начальных данных",
+    "Настройка интеграций и обменов",
+    "Тестирование и подготовка к запуску",
+    "Проектная документация",
+    "Обучение пользователей",
+  ];
+
+  // Задержка для имитации сетевого запроса, мс
+  const FAKE_LATENCY_MS = 300;
+
+  // --- Имитация ответа сервера ---
+  function fetchIncludedItems() {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve([...TEST_ITEMS]), FAKE_LATENCY_MS);
+    });
+  }
+
+  // --- Отрисовка списка из пунктов ---
+  function renderList(listEl, items) {
+    listEl.textContent = "";
+
+    for (const text of items) {
+      const li = document.createElement("li");
+      li.innerHTML = text; // допускаем <br> в пунктах
+      listEl.append(li);
+    }
+  }
+
+  // --- Инициализация ---
+  async function initIncludedColumns() {
+    const list = document.querySelector(".included-list");
+    const scroller = document.querySelector(".included-scroll");
+    const wrapper = document.querySelector(".included-columns");
+
+    // Показывает/скрывает градиент и подсказку «Листайте вниз»:
+    // видны, только если блок реально скроллится и пользователь
+    // ещё не долистал до конца
+    function updateScrollHint() {
+      const scrollable = scroller.scrollHeight > scroller.clientHeight + 1;
+      const atBottom =
+        scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1;
+
+      wrapper.classList.toggle("is-scrollable", scrollable);
+      wrapper.classList.toggle("is-at-bottom", atBottom || !scrollable);
+    }
+
+    scroller.addEventListener("scroll", updateScrollHint, { passive: true });
+    window.addEventListener("resize", updateScrollHint);
+
+    const items = await fetchIncludedItems();
+
+    renderList(list, items);
+    updateScrollHint();
+
+    console.log(
+      `[included-columns] получено пунктов: ${items.length}; ` +
+        `высота списка: ${scroller.scrollHeight}px, ` +
+        `видимая область: ${scroller.clientHeight}px` +
+        (scroller.scrollHeight > scroller.clientHeight
+          ? " (скроллим, подсказка видна)"
+          : " (помещается целиком)"),
+    );
+  }
+
+  initIncludedColumns();
+</script>
