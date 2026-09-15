@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Шаг 4 из 6 — Сколько специалистов нужно?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* //////////////////////////////////////////////
+         Double-range slider demo (overlay)
+         ////////////////////////////////////////////// */
+      .range-slider.overlay {
+        --primary-color: #dbeafe;
+        --track-height: 64px;
+        --thumb-size: var(--track-height);
+        --thumb-color: var(--primary-color);
+        --thumb-shadow: none;
+        --progress-flll-shadow: none;
+        --progress-shadow: none;
+        --progress-background: none;
+        --progress-radius: 0px;
+        --ticks-color: var(--primary-color);
+        --ticks-height: 0;
+        --ticks-thickness: 0;
+        --ticks-gap: 0px; /* must specify units */
+        --min-max-font: 700 18px Arial;
+        --min-max-opacity: 1;
+        --show-min-max: none;
+
+        color: #4c9afd;
+      }
+
+      /* cannot use "--thumb-shadow-hover" because the "--is-left-most"
+         variable is needed (which is declared per-input);
+         "--is-left-most" is either "0" or "1";
+         negative offset puts the crescent on the right edge of the thumb */
+      .range-slider.overlay input:hover {
+        --thumb-shadow: calc(var(--thumb-size) * (var(--is-left-most) - 0.5)) 0
+          0 calc(var(--thumb-size) * -0.3) #4c9afd inset;
+      }
+
+      .range-slider.overlay input:active {
+        --thumb-color: inherit;
+      }
+
+      /* Single (quantity) mode: round cap — a circle holding only the
+         digit "1" — at the left end of the bar. It is a separate element
+         so the fill's clip percentages keep working against the original
+         progress box: the fill edge then stays hidden under the thumb
+         circle and the bar is solid through the selected digit */
+      .range-slider.overlay .range-slider__cap {
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        top: calc(var(--thumb-size) / 2 - var(--track-height) / 2);
+        width: var(--thumb-size);
+        height: var(--thumb-size);
+        border-radius: 50%;
+        background: var(--fill-color);
+        z-index: -1;
+      }
+
+      .range-slider.overlay .range-slider__values {
+        /* container spans exactly between the extreme thumb centers */
+        width: calc(100% - var(--thumb-size));
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      /* center the extreme digits in their circles: "1" inside the round
+         start cap, "10" under the end thumb (justify aligns both flush
+         to the container edges, shifting them by half their ink width) */
+      .range-slider.overlay .range-slider__values span:first-child {
+        position: relative;
+        left: -0.22em;
+      }
+
+      .range-slider.overlay .range-slider__values span:last-child {
+        position: relative;
+        left: 0.55em;
+      }
+
+      /* //////////////////////////////////////////////
+         The main styles
+         ////////////////////////////////////////////// */
+      .range-slider {
+        --primary-color: #4c9afd;
+
+        --value-offset-y: var(--ticks-gap);
+        --value-active-color: white;
+        --value-background: transparent;
+        --value-background-hover: var(--primary-color);
+        --value-font: 700 12px/1 Arial;
+
+        --fill-color: var(--primary-color);
+        --progress-background: #eee;
+        --progress-radius: 20px;
+        --track-height: calc(var(--thumb-size) / 2);
+
+        --min-max-font: 12px Arial;
+        --min-max-opacity: 0.5;
+        --min-max-x-offset: 10%; /* 50% to center */
+
+        --thumb-size: 22px;
+        --thumb-color: white;
+        --thumb-shadow:
+          0 0 3px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 0, 0, 0.5) inset,
+          0 0 0 99px var(--thumb-color) inset;
+
+        --thumb-shadow-active:
+          0 0 0 calc(var(--thumb-size) / 4) inset var(--thumb-color),
+          0 0 0 99px var(--primary-color) inset, 0 0 3px rgba(0, 0, 0, 0.4);
+
+        --thumb-shadow-hover: var(--thumb-shadow);
+
+        --ticks-thickness: 1px;
+        --ticks-height: 5px;
+        /* vertical space between the ticks and the progress bar */
+        --ticks-gap: var(--ticks-height, 0);
+        --ticks-color: silver;
+
+        /* ⚠️ BELOW VARIABLES SHOULD NOT BE CHANGED */
+        --step: 1;
+        --ticks-count: Calc(var(--max) - var(--min)) / var(--step);
+        --maxTicksAllowed: 30;
+        --too-many-ticks: Min(
+          1,
+          Max(var(--ticks-count) - var(--maxTicksAllowed), 0)
+        );
+        /* manipulate the number of steps if too many ticks exist,
+           so there would only be 2 */
+        --x-step: Max(
+          var(--step),
+          var(--too-many-ticks) * (var(--max) - var(--min))
+        );
+        --tickInterval: 100 / ((var(--max) - var(--min)) / var(--step)) *
+          var(--tickEvery, 1);
+        --tickIntervalPerc: calc(
+          (100% - var(--thumb-size)) /
+            ((var(--max) - var(--min)) / var(--x-step)) * var(--tickEvery, 1)
+        );
+
+        /* default value ("--value" is used in single-range markup) */
+        --value-a: Clamp(var(--min), var(--value, 0), var(--max));
+        --value-b: var(--value, 0); /* default value */
+        --text-value-a: var(--text-value, "");
+
+        --completed-a: calc(
+          (var(--value-a) - var(--min)) / (var(--max) - var(--min)) * 100
+        );
+        --completed-b: calc(
+          (var(--value-b) - var(--min)) / (var(--max) - var(--min)) * 100
+        );
+        --ca: Min(var(--completed-a), var(--completed-b));
+        --cb: Max(var(--completed-a), var(--completed-b));
+
+        /* breakdown of the below super-complex brain-breaking CSS math:
+           "clamp" is used to ensure either "-1" or "1"
+           "calc" is used to inflate the outcome into a huge number,
+           to get rid of any value between -1 & 1
+           if absolute diff of both completed % is above "5" (%)
+           ".001" bumps the value just a bit, to avoid a scenario where
+           calc resulted in "0" (then clamp will also be "0") */
+        --thumbs-too-close: Clamp(
+          -1,
+          1000 * (Min(1, Max(var(--cb) - var(--ca) - 5, -1)) + 0.001),
+          1
+        );
+        --thumb-close-to-min: Min(1, Max(var(--ca) - 2, 0)); /* 2% threshold */
+        --thumb-close-to-max: Min(1, Max(98 - var(--cb), 0)); /* 2% threshold */
+
+        display: inline-block;
+        height: Max(var(--track-height), var(--thumb-size));
+        background: linear-gradient(
+            to right,
+            var(--ticks-color) var(--ticks-thickness),
+            transparent 1px
+          )
+          repeat-x;
+        background-size: var(--tickIntervalPerc) var(--ticks-height);
+        background-position-x: calc(
+          var(--thumb-size) / 2 - var(--ticks-thickness) / 2
+        );
+        background-position-y: var(--flip-y, bottom);
+
+        padding-bottom: var(--flip-y, var(--ticks-gap));
+        padding-top: calc(var(--flip-y) * var(--ticks-gap));
+
+        position: relative;
+        z-index: 1;
+      }
+
+      .range-slider[data-ticks-position="top"] {
+        --flip-y: 1;
+      }
+
+      /* min/max texts */
+      .range-slider::before,
+      .range-slider::after {
+        --offset: calc(var(--thumb-size) / 2);
+        content: counter(x);
+        display: var(--show-min-max, block);
+        font: var(--min-max-font);
+        position: absolute;
+        bottom: var(--flip-y, -2.5ch);
+        top: calc(-2.5ch * var(--flip-y));
+        opacity: Clamp(0, var(--at-edge), var(--min-max-opacity));
+        transform: translateX(
+            calc(var(--min-max-x-offset) * var(--before, -1) * -1)
+          )
+          scale(var(--at-edge));
+        pointer-events: none;
+      }
+
+      .range-slider::before {
+        --before: 1;
+        --at-edge: var(--thumb-close-to-min);
+        counter-reset: x var(--min);
+        left: var(--offset);
+      }
+
+      .range-slider::after {
+        --at-edge: var(--thumb-close-to-max);
+        counter-reset: x var(--max);
+        right: var(--offset);
+      }
+
+      .range-slider__values {
+        position: relative;
+        top: 50%;
+        line-height: 0;
+        text-align: justify;
+        width: 100%;
+        pointer-events: none;
+        margin: 0 auto;
+        z-index: 5;
+      }
+
+      /* trick so "justify" will work */
+      .range-slider__values::after {
+        content: "";
+        width: 100%;
+        display: inline-block;
+        height: 0;
+        background: red;
+      }
+
+      .range-slider__progress {
+        --start-end: calc(var(--thumb-size) / 2);
+        --clip-end: calc(100% - (var(--cb)) * 1%);
+        --clip-start: calc(var(--ca) * 1%);
+        --clip: inset(-20px var(--clip-end) -20px var(--clip-start));
+        position: absolute;
+        left: var(--start-end);
+        right: var(--start-end);
+        top: calc(
+          var(--ticks-gap) * var(--flip-y, 0) + var(--thumb-size) / 2 -
+            var(--track-height) / 2
+        );
+        height: calc(var(--track-height));
+        background: var(--progress-background, #eee);
+        pointer-events: none;
+        z-index: -1;
+        border-radius: var(--progress-radius);
+      }
+
+      /* fill area */
+      .range-slider__progress::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        clip-path: var(--clip);
+        top: 0;
+        bottom: 0;
+        background: var(--fill-color, black);
+        box-shadow: var(--progress-flll-shadow);
+        z-index: 1;
+        border-radius: inherit;
+      }
+
+      /* shadow-effect */
+      .range-slider__progress::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        box-shadow: var(--progress-shadow);
+        pointer-events: none;
+        border-radius: inherit;
+      }
+
+      .range-slider > input {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: var(--thumb-size);
+        margin: 0;
+        position: absolute;
+        left: 0;
+        top: calc(
+          50% - Max(var(--track-height), var(--thumb-size)) / 2 +
+            calc(var(--ticks-gap) / 2 * var(--flip-y, -1))
+        );
+        cursor: -webkit-grab;
+        cursor: grab;
+        outline: none;
+        background: none;
+      }
+
+      .range-slider > input:not(:only-of-type) {
+        pointer-events: none;
+      }
+
+      /* thumb styles — каждое правило отдельно: неизвестный вендорный
+         псевдоэлемент в списке селекторов делает всё правило невалидным */
+      .range-slider > input::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        height: var(--thumb-size);
+        width: var(--thumb-size);
+        transform: var(--thumb-transform);
+        border-radius: var(--thumb-radius, 50%);
+        background: var(--thumb-color);
+        box-shadow: var(--thumb-shadow);
+        border: none;
+        pointer-events: auto;
+        transition: 0.1s;
+      }
+
+      .range-slider > input::-moz-range-thumb {
+        appearance: none;
+        height: var(--thumb-size);
+        width: var(--thumb-size);
+        transform: var(--thumb-transform);
+        border-radius: var(--thumb-radius, 50%);
+        background: var(--thumb-color);
+        box-shadow: var(--thumb-shadow);
+        border: none;
+        pointer-events: auto;
+        transition: 0.1s;
+      }
+
+      .range-slider > input::-ms-thumb {
+        appearance: none;
+        height: var(--thumb-size);
+        width: var(--thumb-size);
+        transform: var(--thumb-transform);
+        border-radius: var(--thumb-radius, 50%);
+        background: var(--thumb-color);
+        box-shadow: var(--thumb-shadow);
+        border: none;
+        pointer-events: auto;
+        transition: 0.1s;
+      }
+
+      .range-slider > input:hover {
+        --thumb-shadow: var(--thumb-shadow-hover);
+      }
+
+      .range-slider > input:hover + output {
+        --value-background: var(--value-background-hover);
+        --y-offset: -5px;
+        color: var(--value-active-color);
+        box-shadow: 0 0 0 3px var(--value-background);
+      }
+
+      .range-slider > input:active {
+        --thumb-shadow: var(--thumb-shadow-active);
+        cursor: grabbing;
+        /* when sliding left thumb over the right or vice-versa,
+           make sure the moved thumb is on top */
+        z-index: 2;
+      }
+
+      .range-slider > input:active + output {
+        transition: 0s;
+      }
+
+      .range-slider > input:nth-of-type(1) {
+        --is-left-most: Clamp(0, (var(--value-a) - var(--value-b)) * 99999, 1);
+      }
+
+      .range-slider > input:nth-of-type(1) + output {
+        --value: var(--value-a);
+        --x-offset: calc(var(--completed-a) * -1%);
+      }
+
+      .range-slider > input:nth-of-type(1) + output:not(:only-of-type) {
+        --flip: calc(var(--thumbs-too-close) * -1);
+      }
+
+      .range-slider > input:nth-of-type(1) + output::after {
+        content: var(--prefix, "") var(--text-value-a) var(--suffix, "");
+      }
+
+      .range-slider > input:nth-of-type(2) {
+        --is-left-most: Clamp(0, (var(--value-b) - var(--value-a)) * 99999, 1);
+      }
+
+      .range-slider > input:nth-of-type(2) + output {
+        --value: var(--value-b);
+      }
+
+      /* non-multiple range should not clip start of progress bar */
+      .range-slider > input:only-of-type ~ .range-slider__progress {
+        --clip-start: 0;
+      }
+
+      .range-slider > input + output {
+        --flip: -1;
+        --x-offset: calc(var(--completed-b) * -1%);
+        --pos: calc(
+          ((var(--value) - var(--min)) / (var(--max) - var(--min))) * 100%
+        );
+
+        pointer-events: none;
+        position: absolute;
+        z-index: 5;
+        background: var(--value-background);
+        border-radius: 10px;
+        padding: 2px 4px;
+        left: var(--pos);
+        transform: translate(
+          var(--x-offset),
+          calc(
+            150% * var(--flip) -
+              (var(--y-offset, 0px) + var(--value-offset-y)) * var(--flip)
+          )
+        );
+        transition:
+          all 0.12s ease-out,
+          left 0s;
+      }
+
+      .range-slider > input + output::after {
+        content: var(--prefix, "") var(--text-value-b) var(--suffix, "");
+        font: var(--value-font);
+      }
+
+      /* //////////////////////////////////////////////
+         PAGE SETUP (quiz card)
+         ////////////////////////////////////////////// */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: #f4f6fb;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .quiz-card {
+        width: 100%;
+        max-width: 1296px;
+        min-height: 750px;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 32px;
+        box-shadow: 0 24px 64px rgba(23, 58, 110, 0.08);
+      }
+
+      .quiz-card__body {
+        flex: 1;
+        padding: 40px 40px 32px 40px;
+      }
+
+      /* --- progress ("Шаг 4 из 6") --- */
+      .quiz-progress__label {
+        margin-bottom: 10px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #8a94a6;
+      }
+
+      .progress-container {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+      }
+
+      .progress-container::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 10px;
+        background-color: #f5f5f5;
+        border-radius: 100px;
+      }
+
+      .progress-bar {
+        position: relative;
+        overflow: hidden;
+        transform: translateZ(0);
+        display: grid;
+        place-items: center;
+        height: 10px;
+        width: 800px;
+        border: 0;
+        border-radius: 100px;
+        transition: width 0.3s ease;
+      }
+
+      @keyframes loading {
+        0% {
+          transform: translateX(25px);
+        }
+        100% {
+          transform: translateX(70px);
+        }
+      }
+
+      .progress-bar::before {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: -400%;
+        width: 700%;
+        height: 100%;
+        background: #4ade80
+          repeating-linear-gradient(
+            60deg,
+            transparent,
+            transparent 10px,
+            #36d26f 10px,
+            #36d26f 20px
+          );
+
+        animation: loading 2s infinite linear;
+      }
+
+      /* --- title --- */
+      .quiz-title {
+        margin: 26px 0 30px;
+        font-size: 36px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: #252b37;
+      }
+
+      /* slider spans the whole card content width */
+      .quiz-card .range-slider {
+        width: 100%;
+        min-width: 0;
+      }
+
+      /* --- footer buttons --- */
+      .quiz-card__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 28px;
+        border-top: 1px solid #eef1f6;
+      }
+
+      .quiz-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 22px;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .quiz-btn--ghost {
+        background: #fff;
+        border: 1.5px solid #dbe4f0;
+        color: #4c9afd;
+      }
+
+      .quiz-btn--ghost:hover {
+        border-color: #b9d4fd;
+        background: #f5f9ff;
+      }
+
+      .quiz-btn--primary {
+        padding: 14px 26px;
+        background: #4c9afd;
+        border: none;
+        color: #fff;
+        box-shadow: 0 10px 22px rgba(76, 154, 253, 0.35);
+      }
+
+      .quiz-btn--primary:hover {
+        background: #3a8df9;
+      }
+
+      @media screen and (max-width: 640px) {
+        body {
+          padding: 12px;
+        }
+
+        .quiz-card {
+          min-height: 480px;
+        }
+
+        .quiz-card__body {
+          padding: 20px 20px 32px;
+        }
+
+        .quiz-title {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-card">
+      <div class="quiz-card__body">
+        <!-- progress -->
+        <div class="quiz-progress">
+          <div class="quiz-progress__label">Шаг 4 из 6</div>
+          <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+
+        <!-- question -->
+        <h1 class="quiz-title">Сколько специалистов нужно?</h1>
+
+        <!-- Single range slider: quantity picker (1..10) -->
+        <div
+          class="range-slider overlay"
+          style="
+            --min: 1;
+            --max: 10;
+            --step: 1;
+            --value: 1;
+            --text-value: &quot;1&quot;;
+          "
+        >
+          <input
+            type="range"
+            min="1"
+            max="10"
+            step="1"
+            value="1"
+            aria-label="Количество специалистов"
+            oninput="
+              this.parentNode.style.setProperty('--value', this.value);
+              this.parentNode.style.setProperty(
+                '--text-value',
+                JSON.stringify(this.value),
+              );
+            "
+          />
+          <div class="range-slider__values">
+            <span data-value="1">1</span> <span data-value="2">2</span>
+            <span data-value="3">3</span> <span data-value="4">4</span>
+            <span data-value="5">5</span> <span data-value="6">6</span>
+            <span data-value="7">7</span> <span data-value="8">8</span>
+            <span data-value="9">9</span> <span data-value="10">10</span>
+          </div>
+          <div class="range-slider__progress"></div>
+          <div class="range-slider__cap"></div>
+        </div>
+      </div>
+
+      <!-- footer -->
+      <div class="quiz-card__footer">
+        <button type="button" class="quiz-btn quiz-btn--ghost">← Назад</button>
+        <button type="button" class="quiz-btn quiz-btn--primary">
+          Далее →
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
