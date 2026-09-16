@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,89 +11,14 @@
       rel="stylesheet"
     />
     <style>
-      /* //////////////////////////////////////////////
-         Double-range slider demo (overlay)
-         ////////////////////////////////////////////// */
-      .range-slider.overlay {
-        --primary-color: #dbeafe;
-        --track-height: 64px;
-        --thumb-size: var(--track-height);
-        --thumb-color: var(--primary-color);
-        --thumb-shadow: none;
-        --progress-flll-shadow: none;
-        --progress-shadow: none;
-        --progress-background: none;
-        --progress-radius: 0px;
-        --ticks-color: var(--primary-color);
-        --ticks-height: 0;
-        --ticks-thickness: 0;
-        --ticks-gap: 0px; /* must specify units */
-        --min-max-font: 700 18px Arial;
-        --min-max-opacity: 1;
-        --show-min-max: none;
-
-        color: #4c9afd;
-      }
-
-      /* cannot use "--thumb-shadow-hover" because the "--is-left-most"
-         variable is needed (which is declared per-input);
-         "--is-left-most" is either "0" or "1";
-         negative offset puts the crescent on the right edge of the thumb */
-      .range-slider.overlay input:hover {
-        --thumb-shadow: calc(var(--thumb-size) * (var(--is-left-most) - 0.5)) 0
-          0 calc(var(--thumb-size) * -0.3) #4c9afd inset;
-      }
-
-      .range-slider.overlay input:active {
-        --thumb-color: inherit;
-      }
-
-      /* Single (quantity) mode: round cap — a circle holding only the
-         digit "1" — at the left end of the bar. It is a separate element
-         so the fill's clip percentages keep working against the original
-         progress box: the fill edge then stays hidden under the thumb
-         circle and the bar is solid through the selected digit */
-      .range-slider.overlay .range-slider__cap {
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: calc(var(--thumb-size) / 2 - var(--track-height) / 2);
-        width: var(--thumb-size);
-        height: var(--thumb-size);
-        border-radius: 50%;
-        background: var(--fill-color);
-        z-index: -1;
-      }
-
-      .range-slider.overlay .range-slider__values {
-        /* container spans exactly between the extreme thumb centers */
-        width: calc(100% - var(--thumb-size));
-        font-family:
-          "Inter",
-          system-ui,
-          -apple-system,
-          "Segoe UI",
-          Arial,
-          sans-serif;
-        font-size: 20px;
-        font-weight: 600;
-      }
-
-      /* center the extreme digits in their circles: "1" inside the round
-         start cap, "10" under the end thumb (justify aligns both flush
-         to the container edges, shifting them by half their ink width) */
-      .range-slider.overlay .range-slider__values span:first-child {
-        position: relative;
-        left: -0.22em;
-      }
-
-      .range-slider.overlay .range-slider__values span:last-child {
-        position: relative;
-        left: 0.55em;
-      }
+      /* Структура стилей:
+         1. Слайдер — базовые стили компонента (универсальные)
+         2. Тема "overlay" — оформление слайдера для этого квиза
+         3. Страница и карточка квиза
+         4. Адаптивность */
 
       /* //////////////////////////////////////////////
-         The main styles
+         1. Слайдер — базовые стили компонента
          ////////////////////////////////////////////// */
       .range-slider {
         --primary-color: #4c9afd;
@@ -111,7 +36,7 @@
 
         --min-max-font: 12px Arial;
         --min-max-opacity: 0.5;
-        --min-max-x-offset: 10%; /* 50% to center */
+        --min-max-x-offset: 10%; /* 50% — центрировать */
 
         --thumb-size: 22px;
         --thumb-color: white;
@@ -127,11 +52,12 @@
 
         --ticks-thickness: 1px;
         --ticks-height: 5px;
-        /* vertical space between the ticks and the progress bar */
+        /* вертикальный отступ между делениями и полосой */
         --ticks-gap: var(--ticks-height, 0);
         --ticks-color: silver;
 
-        /* ⚠️ BELOW VARIABLES SHOULD NOT BE CHANGED */
+        /* ⚠️ Служебные переменные — НЕ ИЗМЕНЯТЬ:
+           математика расчёта делений и шага */
         --step: 1;
         --ticks-count: Calc(var(--max) - var(--min)) / var(--step);
         --maxTicksAllowed: 30;
@@ -139,8 +65,8 @@
           1,
           Max(var(--ticks-count) - var(--maxTicksAllowed), 0)
         );
-        /* manipulate the number of steps if too many ticks exist,
-           so there would only be 2 */
+        /* если делений слишком много, укрупняем шаг,
+           чтобы осталось всего 2 деления */
         --x-step: Max(
           var(--step),
           var(--too-many-ticks) * (var(--max) - var(--min))
@@ -152,9 +78,10 @@
             ((var(--max) - var(--min)) / var(--x-step)) * var(--tickEvery, 1)
         );
 
-        /* default value ("--value" is used in single-range markup) */
+        /* значение по умолчанию ("--value" задаётся в разметке
+           одиночного слайдера) */
         --value-a: Clamp(var(--min), var(--value, 0), var(--max));
-        --value-b: var(--value, 0); /* default value */
+        --value-b: var(--value, 0); /* значение по умолчанию */
         --text-value-a: var(--text-value, "");
 
         --completed-a: calc(
@@ -166,20 +93,20 @@
         --ca: Min(var(--completed-a), var(--completed-b));
         --cb: Max(var(--completed-a), var(--completed-b));
 
-        /* breakdown of the below super-complex brain-breaking CSS math:
-           "clamp" is used to ensure either "-1" or "1"
-           "calc" is used to inflate the outcome into a huge number,
-           to get rid of any value between -1 & 1
-           if absolute diff of both completed % is above "5" (%)
-           ".001" bumps the value just a bit, to avoid a scenario where
-           calc resulted in "0" (then clamp will also be "0") */
+        /* Пояснение к сложной формуле ниже:
+           "clamp" гарантирует результат либо "-1", либо "1";
+           "calc" раздувает значение до огромного числа,
+           чтобы избавиться от промежутка между -1 и 1
+           (срабатывает, если разница заполнения бегунков > 5%);
+           "+0.001" подстраховывает от нулевого результата,
+           когда calc дал ровно "0" (тогда clamp тоже даст "0") */
         --thumbs-too-close: Clamp(
           -1,
           1000 * (Min(1, Max(var(--cb) - var(--ca) - 5, -1)) + 0.001),
           1
         );
-        --thumb-close-to-min: Min(1, Max(var(--ca) - 2, 0)); /* 2% threshold */
-        --thumb-close-to-max: Min(1, Max(98 - var(--cb), 0)); /* 2% threshold */
+        --thumb-close-to-min: Min(1, Max(var(--ca) - 2, 0)); /* порог 2% */
+        --thumb-close-to-max: Min(1, Max(98 - var(--cb), 0)); /* порог 2% */
 
         display: inline-block;
         height: Max(var(--track-height), var(--thumb-size));
@@ -206,7 +133,7 @@
         --flip-y: 1;
       }
 
-      /* min/max texts */
+      /* подписи min/max по краям слайдера */
       .range-slider::before,
       .range-slider::after {
         --offset: calc(var(--thumb-size) / 2);
@@ -248,7 +175,7 @@
         z-index: 5;
       }
 
-      /* trick so "justify" will work */
+      /* хитрость, чтобы сработал text-align: justify */
       .range-slider__values::after {
         content: "";
         width: 100%;
@@ -276,7 +203,7 @@
         border-radius: var(--progress-radius);
       }
 
-      /* fill area */
+      /* заливка — выделенная часть полосы */
       .range-slider__progress::before {
         content: "";
         position: absolute;
@@ -291,7 +218,7 @@
         border-radius: inherit;
       }
 
-      /* shadow-effect */
+      /* эффект тени поверх полосы */
       .range-slider__progress::after {
         content: "";
         position: absolute;
@@ -326,8 +253,9 @@
         pointer-events: none;
       }
 
-      /* thumb styles — каждое правило отдельно: неизвестный вендорный
-         псевдоэлемент в списке селекторов делает всё правило невалидным */
+      /* Стили бегунка — каждое правило вынесено отдельно: неизвестный
+         вендорный псевдоэлемент в списке селекторов делает всё
+         правило невалидным */
       .range-slider > input::-webkit-slider-thumb {
         appearance: none;
         -webkit-appearance: none;
@@ -382,8 +310,7 @@
       .range-slider > input:active {
         --thumb-shadow: var(--thumb-shadow-active);
         cursor: grabbing;
-        /* when sliding left thumb over the right or vice-versa,
-           make sure the moved thumb is on top */
+        /* при пересечении бегунков перемещаемый — всегда сверху */
         z-index: 2;
       }
 
@@ -416,7 +343,7 @@
         --value: var(--value-b);
       }
 
-      /* non-multiple range should not clip start of progress bar */
+      /* у одиночного слайдера начало полосы не обрезается */
       .range-slider > input:only-of-type ~ .range-slider__progress {
         --clip-start: 0;
       }
@@ -453,7 +380,89 @@
       }
 
       /* //////////////////////////////////////////////
-         PAGE SETUP (quiz card)
+         2. Тема "overlay" — оформление слайдера для квиза
+         (крупный бегунок поверх полосы с цифрами)
+         ////////////////////////////////////////////// */
+      .range-slider.overlay {
+        --primary-color: #dbeafe;
+        --track-height: 64px;
+        --thumb-size: var(--track-height);
+        --thumb-color: var(--primary-color);
+        --thumb-shadow: none;
+        --progress-flll-shadow: none;
+        --progress-shadow: none;
+        --progress-background: none;
+        --progress-radius: 0px;
+        --ticks-color: var(--primary-color);
+        --ticks-height: 0;
+        --ticks-thickness: 0;
+        --ticks-gap: 0px; /* единицы измерения обязательны */
+        --min-max-font: 700 18px Arial;
+        --min-max-opacity: 1;
+        --show-min-max: none;
+
+        color: #4c9afd;
+      }
+
+      /* Ховер-эффект бегунка — "полумесяц" на его краю.
+         "--thumb-shadow-hover" здесь не подходит: нужна переменная
+         "--is-left-most", объявляемая на каждом инпуте (0 или 1);
+         отрицательный сдвиг рисует полумесяц у правого края бегунка */
+      .range-slider.overlay input:hover {
+        --thumb-shadow: calc(var(--thumb-size) * (var(--is-left-most) - 0.5)) 0
+          0 calc(var(--thumb-size) * -0.3) #4c9afd inset;
+      }
+
+      .range-slider.overlay input:active {
+        --thumb-color: inherit;
+      }
+
+      /* Режим одиночного выбора (количество): круглая шапка слева —
+         кружок с цифрой "1" на левом конце полосы. Вынесена в отдельный
+         элемент, чтобы проценты обрезки заливки продолжали считаться
+         от исходного блока прогресса: край заливки остаётся скрыт
+         под кружком, и полоса выглядит цельной до выбранной цифры */
+      .range-slider.overlay .range-slider__cap {
+        pointer-events: none;
+        position: absolute;
+        left: 0;
+        top: calc(var(--thumb-size) / 2 - var(--track-height) / 2);
+        width: var(--thumb-size);
+        height: var(--thumb-size);
+        border-radius: 50%;
+        background: var(--fill-color);
+        z-index: -1;
+      }
+
+      .range-slider.overlay .range-slider__values {
+        /* контейнер растянут ровно между центрами крайних бегунков */
+        width: calc(100% - var(--thumb-size));
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      /* Центрируем крайние цифры в их кружках: "1" — в круглой шапке
+         слева, "10" — под правым бегунком (justify прижимает оба спана
+         к краям контейнера, а сдвиги компенсируют ширину символов) */
+      .range-slider.overlay .range-slider__values span:first-child {
+        position: relative;
+        left: -0.22em;
+      }
+
+      .range-slider.overlay .range-slider__values span:last-child {
+        position: relative;
+        left: 0.55em;
+      }
+
+      /* //////////////////////////////////////////////
+         3. Страница и карточка квиза
          ////////////////////////////////////////////// */
       body {
         margin: 0;
@@ -489,7 +498,7 @@
         padding: 40px 40px 32px 40px;
       }
 
-      /* --- progress ("Шаг 4 из 6") --- */
+      /* --- прогресс-бар шага квиза --- */
       .quiz-progress__label {
         margin-bottom: 10px;
         font-size: 16px;
@@ -556,7 +565,7 @@
         animation: loading 2s infinite linear;
       }
 
-      /* --- title --- */
+      /* --- заголовок вопроса --- */
       .quiz-title {
         margin: 26px 0 30px;
         font-size: 36px;
@@ -565,13 +574,47 @@
         color: #252b37;
       }
 
-      /* slider spans the whole card content width */
+      /* --- инпут количества специалистов (над слайдером) --- */
+      .specialists-input {
+        width: 120px;
+        height: 64px;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 20px;
+        font-weight: 500;
+        color: #252b37;
+        text-align: center;
+        border: 1.5px solid #dbe4f0;
+        border-radius: 16px;
+        outline: none;
+        margin-bottom: 24px;
+        transition: border-color 0.15s;
+      }
+
+      .specialists-input:focus {
+        border-color: #4c9afd;
+      }
+
+      /* скрыть стрелки up/down у number-инпута */
+      .specialists-input::-webkit-outer-spin-button,
+      .specialists-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        appearance: none;
+        margin: 0;
+      }
+
+      .specialists-input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+
+      /* слайдер на всю ширину карточки */
       .quiz-card .range-slider {
         width: 100%;
         min-width: 0;
       }
 
-      /* --- footer buttons --- */
+      /* --- кнопки футера --- */
       .quiz-card__footer {
         display: flex;
         align-items: center;
@@ -620,6 +663,7 @@
         background: #3a8df9;
       }
 
+      /* --- 4. адаптивность --- */
       @media screen and (max-width: 640px) {
         body {
           padding: 12px;
@@ -642,7 +686,7 @@
   <body>
     <div class="quiz-card">
       <div class="quiz-card__body">
-        <!-- progress -->
+        <!-- Прогресс-бар: шаг 4 из 6 -->
         <div class="quiz-progress">
           <div class="quiz-progress__label">Шаг 4 из 6</div>
           <div class="progress-container">
@@ -650,10 +694,24 @@
           </div>
         </div>
 
-        <!-- question -->
+        <!-- Вопрос -->
         <h1 class="quiz-title">Сколько специалистов нужно?</h1>
 
-        <!-- Single range slider: quantity picker (1..10) -->
+        <!-- Инпут количества (синхронизирован со слайдером) -->
+        <input
+          type="number"
+          class="specialists-input"
+          id="specialistsInput"
+          min="1"
+          max="10"
+          step="1"
+          value="1"
+          aria-label="Количество специалистов"
+        />
+
+        <!-- Слайдер одиночного выбора: количество (1..10).
+             Диапазон и стартовое значение задаются CSS-переменными
+             в атрибуте style: --min, --max, --step, --value -->
         <div
           class="range-slider overlay"
           style="
@@ -666,18 +724,12 @@
         >
           <input
             type="range"
+            id="specialistsRange"
             min="1"
             max="10"
             step="1"
             value="1"
             aria-label="Количество специалистов"
-            oninput="
-              this.parentNode.style.setProperty('--value', this.value);
-              this.parentNode.style.setProperty(
-                '--text-value',
-                JSON.stringify(this.value),
-              );
-            "
           />
           <div class="range-slider__values">
             <span data-value="1">1</span> <span data-value="2">2</span>
@@ -691,7 +743,7 @@
         </div>
       </div>
 
-      <!-- footer -->
+      <!-- Футер с кнопками -->
       <div class="quiz-card__footer">
         <button type="button" class="quiz-btn quiz-btn--ghost">← Назад</button>
         <button type="button" class="quiz-btn quiz-btn--primary">
@@ -699,5 +751,51 @@
         </button>
       </div>
     </div>
+
+    <script>
+      // Двусторонняя синхронизация: инпут количества <-> слайдер.
+      // Источник истины — сам range-инпут (rangeInput).
+      // CSS-переменные "--value" и "--text-value" на контейнере слайдера
+      // управляют визуальным состоянием: заливкой полосы и цифрой на бегунке.
+
+      const MIN = 1; // допустимый диапазон значений
+      const MAX = 10;
+
+      const numberInput = document.getElementById("specialistsInput");
+      const rangeInput = document.getElementById("specialistsRange");
+      const slider = rangeInput.closest(".range-slider");
+
+      // Устанавливает значение слайдера: обновляет range-инпут
+      // и CSS-переменные, отвечающие за визуальное состояние
+      function setSliderValue(value) {
+        rangeInput.value = value;
+        slider.style.setProperty("--value", value);
+        slider.style.setProperty("--text-value", JSON.stringify(String(value)));
+      }
+
+      // Слайдер -> инпут: при движении бегунка меняем число в инпуте
+      rangeInput.addEventListener("input", () => {
+        setSliderValue(rangeInput.value);
+        numberInput.value = rangeInput.value;
+      });
+
+      // Инпут -> слайдер: при вводе числа двигаем бегунок.
+      // Выход за диапазон (1..10) ограничиваем,
+      // пустое и нечисловое значение игнорируем
+      numberInput.addEventListener("input", () => {
+        if (numberInput.value === "") return;
+
+        const value = Number(numberInput.value);
+        if (Number.isNaN(value)) return;
+
+        setSliderValue(Math.min(MAX, Math.max(MIN, value)));
+      });
+
+      // При потере фокуса приводим значение инпута
+      // к последнему валидному значению слайдера
+      numberInput.addEventListener("blur", () => {
+        numberInput.value = rangeInput.value;
+      });
+    </script>
   </body>
 </html>
