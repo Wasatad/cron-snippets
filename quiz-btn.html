@@ -16,14 +16,17 @@
   <body>
     <div class="page-wrapper">
       <div class="quiz-cover-card">
-        <h2 class="quiz-title">Подберите специалистов</h2>
+        <h2 class="quiz-title">
+          Подберем специалистов<br /><span>под ваши задачи</span>
+        </h2>
+
         <p class="quiz-description">
           Ответьте на несколько простых вопросов и мы вышлем вам подборку
           резюме<br />
           специалистов, подходящих под ваш проект
         </p>
         <button class="quiz-button">
-          Подобрать <span class="arrow">&rarr;</span>
+          Подобрать специалистов <span class="arrow">&rarr;</span>
         </button>
       </div>
     </div>
@@ -78,16 +81,20 @@
 
   /* Заголовок */
   .quiz-title {
-    font-size: 40px;
+    font-size: 48px;
     font-weight: 500;
     color: #212529;
     margin: 0 0 20px 0;
   }
 
+  .quiz-title span {
+    color: #4c9afd;
+  }
+
   /* Описание */
   .quiz-description {
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 300;
     color: #6c757d;
     line-height: 1.5;
     margin: 0 0 40px 0;
@@ -151,3 +158,4 @@
     line-height: 1;
   }
 </style>
+
