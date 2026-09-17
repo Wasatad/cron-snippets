@@ -461,6 +461,15 @@
         left: 0.55em;
       }
 
+      /* цифры вне выбранного диапазона — чуть бледнее */
+      .range-slider.overlay .range-slider__values span {
+        transition: color 0.15s;
+      }
+
+      .range-slider.overlay .range-slider__values span:not(.is-active) {
+        color: #6bb1f3;
+      }
+
       /* //////////////////////////////////////////////
          3. Страница и карточка квиза
          ////////////////////////////////////////////// */
@@ -771,6 +780,20 @@
         rangeInput.value = value;
         slider.style.setProperty("--value", value);
         slider.style.setProperty("--text-value", JSON.stringify(String(value)));
+        updateValuesHighlight(Number(value));
+      }
+
+      // Подсвечивает цифры в выбранном диапазоне (1..value):
+      // остальные цифры бледнеют (класс "is-active" снимается)
+      function updateValuesHighlight(value) {
+        slider
+          .querySelectorAll(".range-slider__values span")
+          .forEach((span) => {
+            span.classList.toggle(
+              "is-active",
+              Number(span.dataset.value) <= value,
+            );
+          });
       }
 
       // Слайдер -> инпут: при движении бегунка меняем число в инпуте
@@ -796,6 +819,9 @@
       numberInput.addEventListener("blur", () => {
         numberInput.value = rangeInput.value;
       });
+
+      // Начальная подсветка цифр под стартовое значение
+      updateValuesHighlight(Number(rangeInput.value));
     </script>
   </body>
 </html>
