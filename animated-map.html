@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Распределенная команда</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              "brand-blue": "#4C9AFD",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <!-- Основной блок. overflow-hidden предотвращает появление горизонтального скролла от огромной карты -->
+    <section class="w-full bg-brand-blue overflow-hidden font-sans relative">
+      <!-- Центрированный контейнер 1360px -->
+      <div
+        class="max-w-[1360px] mx-auto px-6 md:px-10 lg:px-12 relative min-h-[600px] flex items-stretch"
+      >
+        <!-- Текстовая колонка: левая часть блока, тянется на всю высоту и служит
+             точкой привязки для карты (карта позиционируется от её правого края) -->
+        <div
+          class="relative z-10 w-full max-w-xs lg:max-w-[24rem] shrink-0 flex flex-col justify-center py-20"
+        >
+          <!-- Карта: начинается через 32px (ml-8) правее текстового блока и занимает
+               всю высоту секции. Излишек справа выходит за контейнер и обрезается
+               секцией (overflow-hidden), горизонтальный скролл не появляется -->
+          <img
+            src="src/map.gif"
+            class="absolute top-0 left-full ml-0 h-full w-auto max-w-none pointer-events-none -z-10"
+            alt="Карта"
+          />
+
+          <h2
+            class="text-white text-4xl sm:text-5xl lg:text-[48px] font-medium leading-tight mb-6"
+          >
+            Распределённая<br />команда
+          </h2>
+
+          <p
+            class="text-white/90 text-base sm:text-md leading-relaxed mb-10 font-normal"
+          >
+            На сегодняшний день в компании реализуют творческий потенциал более
+            60 сотрудников, проживающих в 35 городах России, а еще в Грузии,
+            Армении и Сербии.
+          </p>
+
+          <a
+            href="#"
+            class="inline-flex self-start items-center justify-center px-8 py-3.5 border border-white text-white rounded-full font-medium hover:bg-white/15 transition-colors duration-300 backdrop-blur-sm"
+          >
+            Подробнее о команде
+          </a>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
