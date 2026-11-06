@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="1С-ТЕСТЦЕНТР в цифрах: ключевые показатели сервиса профессиональной оценки."
+    />
+    <title>1С-ТЕСТЦЕНТР в цифрах</title>
+    <style>
+      @font-face {
+        font-family: "Montserrat:Bold";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Montserrat:Medium";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+      }
+
+      body {
+        min-height: 100dvh;
+        background: #f5f5f5;
+        font-family: "Montserrat:Medium", "Montserrat", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      /* ---------- Section ---------- */
+      .key-numbers {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 112px 32px;
+        overflow: hidden;
+        isolation: isolate;
+        background-image: linear-gradient(
+          158.59497553777084deg,
+          rgb(106, 66, 221) 6.1733%,
+          rgb(136, 103, 238) 54.383%,
+          rgb(162, 133, 250) 93.827%
+        );
+      }
+
+      .key-numbers__decor-layer {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      .key-numbers__decor {
+        position: absolute;
+        display: block;
+        max-width: none;
+        overflow: visible;
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+
+      .key-numbers__decor--right-fill {
+        top: -394px;
+        right: -364px;
+      }
+
+      .key-numbers__decor--right-outline {
+        top: -158px;
+        right: -342px;
+      }
+
+      .key-numbers__decor--left-fill {
+        top: 276px;
+        left: -240px;
+      }
+
+      .key-numbers__container {
+        display: flex;
+        flex: 1 1 0;
+        gap: 32px;
+        align-items: flex-start;
+        max-width: 1278px;
+        min-width: 1px;
+      }
+
+      .key-numbers__title {
+        flex: 0 1 400px;
+        max-width: 400px;
+        padding-bottom: 32px;
+      }
+
+      .key-numbers__title h2 {
+        margin: 0;
+        font-family: "Montserrat:Bold";
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 1.2;
+        color: #fff;
+        overflow-wrap: break-word;
+      }
+
+      .key-numbers__grid {
+        flex: 1 1 0;
+        min-width: 1px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 48px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      /* ---------- Item ---------- */
+      .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-self: start;
+        outline: none;
+        cursor: default;
+      }
+
+      .stat--animated {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: calc(var(--i, 0) * 110ms);
+      }
+
+      .is-visible .stat--animated {
+        opacity: 1;
+        transform: none;
+      }
+
+      .stat__value {
+        font-family: "Montserrat:Bold";
+        font-weight: 700;
+        font-size: 52px;
+        line-height: normal;
+        color: #fff;
+        font-variant-numeric: tabular-nums;
+        overflow-wrap: break-word;
+      }
+
+      .stat__label {
+        position: relative;
+        padding-top: 20px;
+        border-top: 2px solid rgba(255, 255, 255, 0.25);
+      }
+
+      .stat__label p {
+        font-family: "Montserrat:Medium";
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.75);
+        overflow-wrap: break-word;
+      }
+
+      /* ---------- Responsive ---------- */
+      @media (max-width: 960px) {
+        .key-numbers {
+          padding: 80px 24px;
+        }
+        .key-numbers__container {
+          flex-direction: column;
+          gap: 16px;
+        }
+        .key-numbers__title {
+          flex: none;
+        }
+        .key-numbers__grid {
+          flex: none;
+          width: 100%;
+          gap: 40px 32px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .key-numbers {
+          padding: 64px 20px;
+        }
+        .key-numbers__title h2 {
+          font-size: 30px;
+        }
+        .key-numbers__grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 32px;
+        }
+        .stat__value {
+          font-size: 44px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .stat,
+        .stat__value,
+        .key-numbers__decor {
+          transition: none;
+        }
+        .stat--animated {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="key-numbers" aria-labelledby="key-numbers-title">
+      <div class="key-numbers__decor-layer" aria-hidden="true">
+        <svg
+          class="key-numbers__decor key-numbers__decor--right-fill"
+          width="670"
+          height="670"
+          viewBox="0 0 670 670"
+          fill="none"
+          preserveAspectRatio="none"
+          data-depth="1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="335"
+            cy="335"
+            r="335"
+            fill="url(#decor-right-fill-gradient)"
+          />
+          <defs>
+            <linearGradient
+              id="decor-right-fill-gradient"
+              x1="466.24"
+              y1="180.212"
+              x2="335"
+              y2="670"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="white" stop-opacity="0.1" />
+              <stop offset="1" stop-color="white" stop-opacity="0.05" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <svg
+          class="key-numbers__decor key-numbers__decor--right-outline"
+          width="530"
+          height="530"
+          viewBox="0 0 530 530"
+          fill="none"
+          preserveAspectRatio="none"
+          data-depth="0.65"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="265"
+            cy="265"
+            r="264.5"
+            stroke="white"
+            stroke-opacity="0.17"
+          />
+        </svg>
+
+        <svg
+          class="key-numbers__decor key-numbers__decor--left-fill"
+          width="670"
+          height="670"
+          viewBox="0 0 670 670"
+          fill="none"
+          preserveAspectRatio="none"
+          data-depth="-0.5"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="335"
+            cy="335"
+            r="335"
+            fill="url(#decor-left-fill-gradient)"
+            fill-opacity="0.25"
+          />
+          <defs>
+            <linearGradient
+              id="decor-left-fill-gradient"
+              x1="466.238"
+              y1="180.212"
+              x2="278.5"
+              y2="227.5"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="white" stop-opacity="0.1" />
+              <stop offset="1" stop-color="white" stop-opacity="0.05" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="key-numbers__container">
+        <div class="key-numbers__title">
+          <h2 id="key-numbers-title">1С-ТЕСТЦЕНТР в&nbsp;цифрах</h2>
+        </div>
+
+        <ul class="key-numbers__grid">
+          <li class="stat stat--animated" style="--i: 0">
+            <p
+              class="stat__value"
+              data-count="10000"
+              data-format="space"
+              data-suffix="+"
+            >
+              10 000+
+            </p>
+            <div class="stat__label"><p>специалистов прошли оценку</p></div>
+          </li>
+          <li class="stat stat--animated" style="--i: 1">
+            <p class="stat__value">8</p>
+            <div class="stat__label">
+              <p>готовых профессиональных тестов</p>
+            </div>
+          </li>
+          <li class="stat stat--animated" style="--i: 2">
+            <p class="stat__value">24/7</p>
+            <div class="stat__label"><p>доступ к сервису</p></div>
+          </li>
+          <li class="stat stat--animated" style="--i: 3">
+            <p class="stat__value">с 2019</p>
+            <div class="stat__label">
+              <p>года развиваем сервис профессиональной оценки</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        var section = document.querySelector(".key-numbers");
+        var decorObjects = section.querySelectorAll(".key-numbers__decor");
+        var values = section.querySelectorAll(".stat__value[data-count]");
+        var reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        function format(el, n) {
+          var num = String(n);
+          if (el.dataset.format === "space") {
+            num = num.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+          }
+          return (el.dataset.prefix || "") + num + (el.dataset.suffix || "");
+        }
+
+        function countUp(el, delay) {
+          var target = Number(el.dataset.count);
+          var from = Number(el.dataset.from || 0);
+          var finalText = el.textContent.trim();
+          var duration = 1600;
+          // Keep the final value available to assistive tech during the animation.
+          el.setAttribute("aria-label", finalText);
+          el.textContent = format(el, from);
+
+          setTimeout(function () {
+            var start = null;
+            function step(ts) {
+              if (start === null) start = ts;
+              var t = Math.min((ts - start) / duration, 1);
+              var eased = 1 - Math.pow(1 - t, 4);
+              el.textContent = format(
+                el,
+                Math.round(from + (target - from) * eased),
+              );
+              if (t < 1) requestAnimationFrame(step);
+              else el.textContent = finalText;
+            }
+            requestAnimationFrame(step);
+          }, delay);
+        }
+
+        function reveal() {
+          section.classList.add("is-visible");
+          if (reduceMotion) return;
+          values.forEach(function (el, i) {
+            countUp(el, i * 110);
+          });
+        }
+
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  reveal();
+                  io.disconnect();
+                }
+              });
+            },
+            { threshold: 0.3 },
+          );
+          io.observe(section);
+        } else {
+          reveal();
+        }
+
+        // Light parallax for the decorative background only.
+        if (!reduceMotion) {
+          section.addEventListener("pointermove", function (e) {
+            var r = section.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width - 0.5;
+            var y = (e.clientY - r.top) / r.height - 0.5;
+            decorObjects.forEach(function (decor) {
+              var depth = Number(decor.dataset.depth || 1);
+              decor.style.transform =
+                "translate(" +
+                x * -24 * depth +
+                "px," +
+                y * -16 * depth +
+                "px)";
+            });
+          });
+          section.addEventListener("pointerleave", function () {
+            decorObjects.forEach(function (decor) {
+              decor.style.transform = "";
+            });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

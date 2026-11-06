@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="История компании и ключевые этапы развития платформы профессиональной оценки."
+    />
+    <title>История компании</title>
+    <style>
+      @font-face {
+        font-family: "Montserrat:Bold";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Montserrat:Medium";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+      }
+
+      :root {
+        color: #ffffff;
+        background: #1f1f47;
+        font-synthesis: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-width: 320px;
+        min-height: 100%;
+      }
+
+      body {
+        background: #1f1f47;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      .history-scroll {
+        min-height: 180dvh;
+        background: #1f1f47;
+      }
+
+      .history {
+        position: sticky;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100dvh;
+        padding: 112px 32px;
+        overflow: hidden;
+        background: #1f1f47;
+      }
+
+      .history__container {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 400px) minmax(350px, 1fr);
+        gap: 32px;
+        align-items: start;
+        width: 100%;
+        max-width: 1278px;
+      }
+
+      .history__heading {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+      }
+
+      .history h1 {
+        max-width: 300px;
+        margin: 0;
+        font-family: "Montserrat:Bold", Montserrat, Arial, sans-serif;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .timeline {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .timeline__item {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr);
+        gap: 8px;
+        align-items: start;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 40px 24px;
+        border: 0;
+        border-top: 2px solid rgba(251, 248, 255, 0.15);
+        border-radius: 0;
+        background: transparent;
+        opacity: 0.3;
+        text-align: left;
+        cursor: pointer;
+        transition:
+          opacity 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .timeline__item--present {
+        padding-bottom: 0;
+      }
+
+      .timeline__item:focus-visible {
+        opacity: 1;
+        outline: 2px solid rgba(129, 63, 234, 0.8);
+        outline-offset: -2px;
+      }
+
+      .timeline__item.is-active {
+        border-top-color: #813fea;
+        opacity: 1;
+      }
+
+      .timeline__year {
+        color: #813fea;
+        font-family: "Montserrat:Bold", Montserrat, Arial, sans-serif;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .timeline__description {
+        display: block;
+        min-width: 0;
+        padding-top: 4px;
+        font-family: "Montserrat:Medium", Montserrat, Arial, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: 0;
+      }
+
+      .timeline__paragraph {
+        display: block;
+      }
+
+      .timeline__paragraph + .timeline__paragraph {
+        margin-top: 12px;
+      }
+
+      .history__glow {
+        position: absolute;
+        bottom: -209px;
+        left: -260px;
+        width: 700px;
+        height: 700px;
+        pointer-events: none;
+      }
+
+      .history__glow svg {
+        position: absolute;
+        top: -275px;
+        left: -275px;
+        display: block;
+        max-width: none;
+      }
+
+      @media (max-width: 900px) {
+        .history-scroll {
+          min-height: 0;
+        }
+
+        .history {
+          position: relative;
+          align-items: flex-start;
+          height: auto;
+          min-height: 100dvh;
+          padding: 72px 28px;
+        }
+
+        .history__container {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+
+        .history h1 {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .history {
+          padding: 56px 20px 72px;
+        }
+
+        .history__container {
+          gap: 36px;
+        }
+
+        .history h1,
+        .timeline__year {
+          font-size: 30px;
+        }
+
+        .timeline__item {
+          grid-template-columns: 84px minmax(0, 1fr);
+          gap: 16px;
+          padding: 28px 4px;
+        }
+
+        .timeline__item--present {
+          padding-bottom: 0;
+        }
+
+        .timeline__description {
+          font-size: 16px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .timeline__item {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="history-scroll">
+      <main class="history" data-node-id="947:3840">
+        <div class="history__container" data-node-id="947:3841">
+          <header class="history__heading" data-node-id="947:3842">
+            <h1 data-node-id="947:3843">История компании</h1>
+          </header>
+
+          <div
+            class="timeline"
+            role="listbox"
+            aria-label="Ключевые события истории компании"
+            aria-activedescendant="milestone-2019"
+            data-node-id="947:3849"
+          >
+            <button
+              class="timeline__item is-active"
+              id="milestone-2019"
+              type="button"
+              role="option"
+              aria-selected="true"
+              data-node-id="947:3850"
+            >
+              <span class="timeline__year" data-node-id="947:3851">2019</span>
+              <span class="timeline__description" data-node-id="947:3853">
+                Запуск сервиса квалификационного тестирования
+              </span>
+            </button>
+
+            <button
+              class="timeline__item"
+              id="milestone-2021"
+              type="button"
+              role="option"
+              aria-selected="false"
+              tabindex="-1"
+              data-node-id="947:3854"
+            >
+              <span class="timeline__year" data-node-id="947:3855">2021</span>
+              <span class="timeline__description" data-node-id="947:3857">
+                Рекомендация фирмы «1С» и развитие партнерской сети
+              </span>
+            </button>
+
+            <button
+              class="timeline__item"
+              id="milestone-2025"
+              type="button"
+              role="option"
+              aria-selected="false"
+              tabindex="-1"
+              data-node-id="947:3858"
+            >
+              <span class="timeline__year" data-node-id="947:3859">2025</span>
+              <span class="timeline__description" data-node-id="947:3861">
+                Регистрация программы для ЭВМ
+              </span>
+            </button>
+
+            <button
+              class="timeline__item"
+              id="milestone-2026"
+              type="button"
+              role="option"
+              aria-selected="false"
+              tabindex="-1"
+              data-node-id="947:3862"
+            >
+              <span class="timeline__year" data-node-id="947:3863">2026</span>
+              <span class="timeline__description" data-node-id="947:3865">
+                Включение ПО в российский реестр и получение ИТ-аккредитации
+              </span>
+            </button>
+
+            <button
+              class="timeline__item timeline__item--present"
+              id="milestone-present"
+              type="button"
+              role="option"
+              aria-selected="false"
+              tabindex="-1"
+              data-node-id="947:3866"
+            >
+              <span class="timeline__year" data-node-id="947:3867">н.в.</span>
+              <span class="timeline__description" data-node-id="947:3869">
+                <span class="timeline__paragraph">
+                  Развиваем платформу профессиональной оценки для разных
+                  специальностей.
+                </span>
+                <span class="timeline__paragraph">
+                  Сегодня в каталоге представлены готовые тесты по 1С и
+                  разработке. Параллельно мы развиваем персональные сценарии
+                  оценки для бухгалтерии, управления, аналитики, маркетинга,
+                  производственных и других профессиональных направлений
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="history__glow" aria-hidden="true" data-node-id="947:3870">
+          <svg
+            width="1250"
+            height="1250"
+            viewBox="0 0 1250 1250"
+            fill="none"
+            preserveAspectRatio="none"
+            overflow="visible"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <g filter="url(#filter0_f_0_14)">
+              <circle
+                cx="625"
+                cy="625"
+                r="350"
+                fill="url(#paint0_linear_0_14)"
+                fill-opacity="0.5"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_f_0_14"
+                x="0"
+                y="0"
+                width="1250"
+                height="1250"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="BackgroundImageFix"
+                  result="shape"
+                />
+                <feGaussianBlur
+                  stdDeviation="137.5"
+                  result="effect1_foregroundBlur_0_14"
+                />
+              </filter>
+              <linearGradient
+                id="paint0_linear_0_14"
+                x1="762.115"
+                y1="463.281"
+                x2="565.97"
+                y2="512.687"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#9887FF" stop-opacity="0.25" />
+                <stop offset="1" stop-color="#9887FF" stop-opacity="0.05" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const timeline = document.querySelector(".timeline");
+      const milestones = Array.from(
+        document.querySelectorAll(".timeline__item"),
+      );
+      const scrollSection = document.querySelector(".history-scroll");
+      let activeIndex = 0;
+      let scrollFrame;
+
+      function selectMilestone(milestone, moveFocus = false) {
+        const selectedIndex = milestones.indexOf(milestone);
+
+        if (selectedIndex === activeIndex && !moveFocus) {
+          return;
+        }
+
+        activeIndex = selectedIndex;
+
+        milestones.forEach((item) => {
+          const isSelected = item === milestone;
+          item.classList.toggle("is-active", isSelected);
+          item.setAttribute("aria-selected", String(isSelected));
+          item.tabIndex = isSelected ? 0 : -1;
+        });
+
+        timeline.setAttribute("aria-activedescendant", milestone.id);
+
+        if (moveFocus) {
+          milestone.focus();
+        }
+      }
+
+      function updateMilestoneFromScroll() {
+        scrollFrame = undefined;
+
+        const sectionTop = scrollSection.offsetTop;
+        const scrollDistance = Math.max(
+          scrollSection.offsetHeight - window.innerHeight,
+          1,
+        );
+        const progress = Math.min(
+          Math.max((window.scrollY - sectionTop) / scrollDistance, 0),
+          1,
+        );
+        const nextIndex = Math.round(progress * (milestones.length - 1));
+
+        if (nextIndex !== activeIndex) {
+          selectMilestone(milestones[nextIndex]);
+        }
+      }
+
+      function requestScrollUpdate() {
+        if (scrollFrame === undefined) {
+          scrollFrame = window.requestAnimationFrame(updateMilestoneFromScroll);
+        }
+      }
+
+      milestones.forEach((milestone) => {
+        milestone.addEventListener("click", () => selectMilestone(milestone));
+
+        milestone.addEventListener("keydown", (event) => {
+          const currentIndex = milestones.indexOf(milestone);
+          let nextIndex = currentIndex;
+
+          if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+            nextIndex = (currentIndex + 1) % milestones.length;
+          } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+            nextIndex =
+              (currentIndex - 1 + milestones.length) % milestones.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = milestones.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          selectMilestone(milestones[nextIndex], true);
+        });
+      });
+
+      window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+      window.addEventListener("resize", requestScrollUpdate);
+      requestScrollUpdate();
+    </script>
+  </body>
+</html>
