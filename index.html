@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Чёрная пятница — 1С-ТЕСТЦЕНТР</title>
+    <style>
+      @font-face {
+        font-family: "Montserrat:Bold";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 700;
+      }
+
+      @font-face {
+        font-family: "Montserrat:Medium";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 500;
+      }
+
+      @font-face {
+        font-family: "Montserrat:ExtraBold";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 800;
+      }
+
+      @font-face {
+        font-family: "Montserrat:Regular";
+        src: url("https://static.figma.com/font/Montserrat_wght__2")
+          format("woff2");
+        font-style: normal;
+        font-weight: 400;
+      }
+
+      :root {
+        color-scheme: light;
+        background: #f7f6fb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        background: #fff;
+      }
+
+      button,
+      a {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .page-shell {
+        min-height: 100vh;
+        overflow: hidden;
+        color: #24244d;
+        font-family: "Montserrat:Medium", Montserrat, Arial, sans-serif;
+      }
+
+      .page-container {
+        width: min(100% - 48px, 1278px);
+        margin: 0 auto;
+      }
+
+      .wire-hero {
+        min-height: 520px;
+        padding: 88px 0 72px;
+        background:
+          radial-gradient(
+            circle at 52% 48%,
+            rgba(255, 255, 255, 0.62),
+            transparent 38%
+          ),
+          linear-gradient(110deg, #e1e3e6, #eceef0 52%, #dfe1e4);
+      }
+
+      .wire-hero__grid {
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) minmax(340px, 1.1fr);
+        gap: clamp(32px, 5vw, 80px);
+        align-items: center;
+      }
+
+      .wire-copy {
+        display: flex;
+        max-width: 500px;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .wire-line {
+        display: block;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(104, 109, 116, 0.2);
+      }
+
+      .wire-line--title {
+        height: 24px;
+        background: rgba(94, 99, 106, 0.34);
+      }
+
+      .wire-line--title-short {
+        width: 72%;
+      }
+
+      .wire-line--body {
+        width: 92%;
+      }
+
+      .wire-line--body-short {
+        width: 78%;
+      }
+
+      .wire-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .wire-button {
+        width: 126px;
+        height: 42px;
+        border-radius: 7px;
+        background: rgba(150, 155, 162, 0.22);
+      }
+
+      .wire-button:first-child {
+        background: #bfc3c8;
+      }
+
+      .wire-window {
+        overflow: hidden;
+        min-height: 300px;
+        border: 1px solid #d4d7da;
+        border-radius: 10px;
+        background: #f8f9fa;
+        box-shadow: 0 20px 55px rgba(70, 74, 80, 0.1);
+      }
+
+      .wire-window__bar {
+        display: flex;
+        height: 34px;
+        padding: 0 16px;
+        align-items: center;
+        gap: 7px;
+        background: #c9cdd1;
+      }
+
+      .wire-window__dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.7);
+      }
+
+      .wire-window__body {
+        display: grid;
+        min-height: 266px;
+        grid-template-columns: 22% 1fr;
+      }
+
+      .wire-sidebar {
+        padding: 22px 16px;
+        background: #d8dbde;
+      }
+
+      .wire-sidebar .wire-line {
+        height: 6px;
+        margin-bottom: 13px;
+        background: rgba(111, 116, 122, 0.16);
+      }
+
+      .wire-table {
+        padding: 26px 30px;
+      }
+
+      .wire-table__heading {
+        width: 42%;
+        height: 11px;
+        margin-bottom: 22px;
+        border-radius: 999px;
+        background: #dcddeb;
+      }
+
+      .wire-row {
+        display: grid;
+        height: 37px;
+        grid-template-columns: 18px 1fr 28%;
+        gap: 14px;
+        align-items: center;
+        border-bottom: 1px solid #ececf4;
+      }
+
+      .wire-row__avatar {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #aeb2b7, #d0d3d6);
+      }
+
+      .wire-row__text,
+      .wire-row__meta {
+        height: 6px;
+        border-radius: 999px;
+        background: #dedfea;
+      }
+
+      .wire-row__meta {
+        background: #eaebf2;
+      }
+
+      .wire-partners {
+        padding: 32px 0;
+        background: #fff;
+      }
+
+      .wire-partners__row {
+        display: flex;
+        min-height: 64px;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(20px, 4vw, 70px);
+      }
+
+      .wire-logo {
+        width: clamp(68px, 8vw, 120px);
+        height: 20px;
+        border-radius: 5px;
+        background: #dedee4;
+      }
+
+      .wire-logo:nth-child(2n) {
+        height: 14px;
+        background: #d2d2d9;
+      }
+
+      .wire-content {
+        padding: 92px 0 180px;
+        background: #fff;
+      }
+
+      .wire-intro {
+        display: grid;
+        margin-bottom: 48px;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: end;
+      }
+
+      .wire-heading,
+      .wire-description {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .wire-heading .wire-line {
+        height: 18px;
+        background: #a8abb0;
+      }
+
+      .wire-heading .wire-line:last-child {
+        width: 68%;
+        background: #c1c3c7;
+      }
+
+      .wire-description .wire-line {
+        height: 8px;
+        background: #d7d6df;
+      }
+
+      .wire-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .wire-card {
+        min-height: 190px;
+        padding: 24px;
+        border: 1px solid #f0eff5;
+        border-radius: 12px;
+        background: #fafafa;
+      }
+
+      .wire-card__icon {
+        width: 28px;
+        height: 28px;
+        margin-bottom: 22px;
+        border: 2px solid #b7b9bd;
+        border-radius: 8px;
+        opacity: 0.62;
+      }
+
+      .wire-card .wire-line {
+        height: 8px;
+        margin-bottom: 10px;
+        background: #d9d8e1;
+      }
+
+      .wire-card .wire-line:first-of-type {
+        width: 58%;
+        height: 18px;
+        margin-bottom: 16px;
+        background: #cbcbd9;
+      }
+
+      .promo {
+        --content-half-width: 468px;
+        --content-side-padding: 32px;
+        --copy-indent: 132px;
+        --percent-width: 112px;
+        --percent-gap: 16px;
+        position: fixed;
+        z-index: 1000;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 80px;
+        color: #fff;
+        background: #160b20;
+        font-synthesis: none;
+        isolation: isolate;
+      }
+
+      .promo[hidden] {
+        display: none;
+      }
+
+      .promo__background {
+        position: absolute;
+        z-index: 0;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .promo__art {
+        position: absolute;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .promo__art--left {
+        top: calc(50% + 26px);
+        left: -114px;
+        width: 437px;
+        height: 452px;
+        transform: translateY(-50%);
+        object-fit: cover;
+      }
+
+      .promo__art--right {
+        top: calc(50% + 118px);
+        right: -460px;
+        width: 1197px;
+        height: 1443px;
+        transform: translateY(-50%);
+        object-fit: cover;
+      }
+
+      .promo__glow {
+        position: absolute;
+        z-index: -1;
+        top: calc(50% + 110px);
+        left: calc(50% + 70px);
+        display: none;
+        width: 650px;
+        height: 650px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .promo__glow img {
+        position: absolute;
+        inset: -58.28%;
+        width: 216.56%;
+        height: 216.56%;
+      }
+
+      .promo__inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        max-width: 936px;
+        margin: 0 auto;
+        padding: 0 16px;
+        gap: 8px;
+        overflow: hidden;
+      }
+
+      .promo__content {
+        position: relative;
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 0;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .promo__copy {
+        display: none;
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: 500px;
+        gap: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: normal;
+        white-space: nowrap;
+      }
+
+      .promo__title,
+      .promo__subtitle,
+      .coupon__label,
+      .coupon__code {
+        margin: 0;
+      }
+
+      .promo__title {
+        font:
+          700 17px/normal "Montserrat:Bold",
+          Montserrat,
+          Arial,
+          sans-serif;
+      }
+
+      .promo__subtitle {
+        color: rgba(255, 255, 255, 0.75);
+        font:
+          500 14px/normal "Montserrat:Medium",
+          Montserrat,
+          Arial,
+          sans-serif;
+      }
+
+      .coupon {
+        display: flex;
+        flex: 0 1 auto;
+        min-width: 0;
+        height: 46px;
+        align-items: center;
+      }
+
+      .coupon__discount {
+        position: relative;
+        display: grid;
+        flex: 0 0 30.099px;
+        width: 30.099px;
+        height: 46px;
+        place-items: start;
+      }
+
+      .coupon__discount-shape {
+        display: block;
+        grid-area: 1 / 1;
+      }
+
+      .coupon__discount-text {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        display: flex;
+        width: 17px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .coupon__discount-value {
+        margin: 0;
+        color: #fff;
+        font:
+          800 14px/normal "Montserrat:ExtraBold",
+          Montserrat,
+          Arial,
+          sans-serif;
+        white-space: nowrap;
+        transform: rotate(90deg);
+      }
+
+      .coupon__edge-frame {
+        display: flex;
+        flex: 0 0 8px;
+        width: 8px;
+        height: 46px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .coupon__edge--right {
+        display: block;
+        flex: 0 0 auto;
+        transform: rotate(90deg);
+      }
+
+      .coupon__center {
+        display: flex;
+        min-width: 0;
+        height: 46px;
+        padding: 0 8px;
+        flex-direction: column;
+        justify-content: center;
+        background: #fff;
+        line-height: normal;
+        white-space: nowrap;
+      }
+
+      .coupon__label {
+        overflow: hidden;
+        color: rgba(52, 22, 80, 0.45);
+        font:
+          400 12px/normal "Montserrat:Regular",
+          Montserrat,
+          Arial,
+          sans-serif;
+        text-overflow: clip;
+      }
+
+      .coupon__code {
+        overflow: hidden;
+        color: transparent;
+        background: linear-gradient(71.1deg, #6d44e0 2.58%, #c344e0 127.17%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        font:
+          700 13px/normal "Montserrat:Bold",
+          Montserrat,
+          Arial,
+          sans-serif;
+        text-overflow: clip;
+      }
+
+      .promo__cta {
+        display: inline-flex;
+        flex: 0 0 auto;
+        height: 46px;
+        min-width: 0;
+        padding: 0 16px;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 6px;
+        color: #fff;
+        background: #816df7;
+        box-shadow: 0 8px 20px rgba(36, 17, 70, 0.18);
+        font:
+          700 14px/1.2 "Montserrat:Bold",
+          Montserrat,
+          Arial,
+          sans-serif;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        transition:
+          background-color 160ms ease,
+          transform 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .promo__cta:hover {
+        background: #6d58ec;
+        box-shadow: 0 10px 24px rgba(25, 10, 51, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .promo__cta:focus-visible,
+      .promo__close:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: 2px;
+      }
+
+      .promo__confetti {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        max-width: none;
+        object-fit: cover;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .promo__confetti--one {
+        bottom: -27.41px;
+        left: calc(50% + 348px);
+        width: 58px;
+        height: 51.406px;
+        transform: translateX(-50%);
+      }
+
+      .promo__confetti--two {
+        top: -32px;
+        left: calc(50% + 311.06px);
+        width: 44.114px;
+        height: 53.18px;
+        transform: translateX(-50%);
+      }
+
+      .promo__confetti--three {
+        top: -32.5px;
+        left: calc(50% - 68.36px);
+        width: 48.293px;
+        height: 50px;
+        transform: translateX(-50%) rotate(-50.63deg);
+      }
+
+      .promo__percent {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 32px;
+        display: none;
+        width: 112px;
+        height: 100px;
+        pointer-events: none;
+      }
+
+      .promo__close {
+        position: absolute;
+        z-index: 5;
+        top: -42px;
+        right: 8px;
+        display: grid;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        place-items: center;
+        border: 0;
+        border-radius: 50%;
+        color: #fff;
+        background: rgba(22, 11, 32, 0.3);
+        cursor: pointer;
+        transition:
+          background-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .promo__close:hover {
+        background: #816df7;
+        transform: scale(1.06);
+      }
+
+      .promo__close img {
+        display: block;
+        width: 22px;
+        height: 22px;
+      }
+
+      @media (min-width: 576px) {
+        .promo__inner {
+          padding-right: 32px;
+          padding-left: 32px;
+          gap: 24px;
+        }
+
+        .coupon__center {
+          padding-right: 12px;
+          padding-left: 12px;
+        }
+
+        .coupon__code {
+          font-size: 16.5px;
+        }
+
+        .promo__close {
+          top: -48px;
+          right: 12px;
+          /* width: 40px;
+          height: 40px; */
+          /* background: rgba(22, 11, 32, 0.5); */
+        }
+
+        .promo__close img {
+          width: 28px;
+          height: 28px;
+        }
+
+        .promo__cta {
+          width: 180px;
+          padding-right: 30px;
+          padding-left: 30px;
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .page-container {
+          width: min(100% - 32px, 1278px);
+        }
+
+        .wire-hero {
+          min-height: 680px;
+          padding: 58px 0;
+        }
+
+        .wire-hero__grid {
+          grid-template-columns: 1fr;
+          gap: 44px;
+        }
+
+        .wire-copy {
+          max-width: 430px;
+        }
+
+        .wire-window {
+          min-height: 230px;
+        }
+
+        .wire-window__body {
+          min-height: 196px;
+        }
+
+        .wire-partners__row {
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .wire-logo:nth-child(n + 6) {
+          display: none;
+        }
+
+        .wire-content {
+          padding-top: 64px;
+        }
+
+        .wire-intro {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .wire-stats {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 16px;
+        }
+      }
+
+      @media (max-width: 479px) {
+        .wire-stats {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .promo__glow {
+          display: block;
+          top: calc(50% + 8px);
+          width: 298px;
+          height: 298px;
+        }
+
+        .promo__glow img {
+          inset: -83.89%;
+          width: 267.78%;
+          height: 267.78%;
+        }
+
+        .promo__copy {
+          display: flex;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .promo__glow {
+          top: calc(50% + 110px);
+          width: 350px;
+          height: 350px;
+        }
+
+        .promo__glow img {
+          inset: -58.28%;
+          width: 216.56%;
+          height: 216.56%;
+        }
+
+        .promo__copy {
+          padding-left: 132px;
+        }
+
+        .promo__title {
+          font-size: 20px;
+        }
+
+        .promo__percent {
+          display: block;
+          left: calc(
+            50% - var(--content-half-width) + var(--content-side-padding) +
+              var(--copy-indent) - var(--percent-width) - var(--percent-gap)
+          );
+        }
+      }
+
+      @media (min-width: 992px) and (max-width: 1099px) {
+        .promo__title {
+          font-size: 18px;
+        }
+
+        .promo__subtitle {
+          font-size: 13px;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .promo {
+          --content-half-width: 550px;
+          --copy-indent: 150px;
+        }
+
+        .promo__inner {
+          max-width: 1100px;
+          justify-content: space-between;
+        }
+
+        .promo__copy {
+          max-width: 550px;
+          padding-left: 150px;
+        }
+
+        .promo__cta {
+          width: 200px;
+        }
+      }
+
+      @media (min-width: 1440px) {
+        .promo {
+          --content-half-width: 639px;
+        }
+
+        .promo__inner {
+          max-width: 1278px;
+        }
+
+        .promo__content {
+          gap: 48px;
+        }
+
+        .promo__copy {
+          max-width: 600px;
+        }
+
+        .promo__close {
+          top: 50%;
+          right: 20px;
+          background: transparent;
+          transform: translateY(-50%);
+        }
+
+        .promo__close:hover {
+          background: rgba(129, 109, 247, 0.32);
+          transform: translateY(-50%) scale(1.06);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .promo__cta,
+        .promo__close {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-shell" aria-label="Схематичный макет веб-страницы">
+      <section class="wire-hero" aria-hidden="true">
+        <div class="page-container wire-hero__grid">
+          <div class="wire-copy">
+            <span class="wire-line wire-line--title"></span>
+            <span
+              class="wire-line wire-line--title wire-line--title-short"
+            ></span>
+            <span class="wire-line wire-line--body"></span>
+            <span
+              class="wire-line wire-line--body wire-line--body-short"
+            ></span>
+            <span class="wire-line wire-line--body"></span>
+            <div class="wire-actions">
+              <span class="wire-button"></span>
+              <span class="wire-button"></span>
+            </div>
+          </div>
+
+          <div class="wire-window">
+            <div class="wire-window__bar">
+              <span class="wire-window__dot"></span>
+              <span class="wire-window__dot"></span>
+              <span class="wire-window__dot"></span>
+            </div>
+            <div class="wire-window__body">
+              <div class="wire-sidebar">
+                <span class="wire-line"></span>
+                <span class="wire-line"></span>
+                <span class="wire-line"></span>
+                <span class="wire-line"></span>
+                <span class="wire-line"></span>
+              </div>
+              <div class="wire-table">
+                <div class="wire-table__heading"></div>
+                <div class="wire-row">
+                  <span class="wire-row__avatar"></span
+                  ><span class="wire-row__text"></span
+                  ><span class="wire-row__meta"></span>
+                </div>
+                <div class="wire-row">
+                  <span class="wire-row__avatar"></span
+                  ><span class="wire-row__text"></span
+                  ><span class="wire-row__meta"></span>
+                </div>
+                <div class="wire-row">
+                  <span class="wire-row__avatar"></span
+                  ><span class="wire-row__text"></span
+                  ><span class="wire-row__meta"></span>
+                </div>
+                <div class="wire-row">
+                  <span class="wire-row__avatar"></span
+                  ><span class="wire-row__text"></span
+                  ><span class="wire-row__meta"></span>
+                </div>
+                <div class="wire-row">
+                  <span class="wire-row__avatar"></span
+                  ><span class="wire-row__text"></span
+                  ><span class="wire-row__meta"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="wire-partners" aria-hidden="true">
+        <div class="page-container wire-partners__row">
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+          <span class="wire-logo"></span>
+        </div>
+      </section>
+
+      <section class="wire-content" aria-hidden="true">
+        <div class="page-container">
+          <div class="wire-intro">
+            <div class="wire-heading">
+              <span class="wire-line"></span>
+              <span class="wire-line"></span>
+              <span class="wire-line"></span>
+            </div>
+            <div class="wire-description">
+              <span class="wire-line"></span>
+              <span class="wire-line"></span>
+              <span class="wire-line"></span>
+              <span class="wire-line wire-line--body-short"></span>
+            </div>
+          </div>
+
+          <div class="wire-stats">
+            <article class="wire-card">
+              <div class="wire-card__icon"></div>
+              <span class="wire-line"></span><span class="wire-line"></span
+              ><span class="wire-line wire-line--body-short"></span>
+            </article>
+            <article class="wire-card">
+              <div class="wire-card__icon"></div>
+              <span class="wire-line"></span><span class="wire-line"></span
+              ><span class="wire-line wire-line--body-short"></span>
+            </article>
+            <article class="wire-card">
+              <div class="wire-card__icon"></div>
+              <span class="wire-line"></span><span class="wire-line"></span
+              ><span class="wire-line wire-line--body-short"></span>
+            </article>
+            <article class="wire-card">
+              <div class="wire-card__icon"></div>
+              <span class="wire-line"></span><span class="wire-line"></span
+              ><span class="wire-line wire-line--body-short"></span>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside
+      class="promo"
+      id="blackFridayBanner"
+      aria-label="Акция «Чёрная пятница»"
+    >
+      <div class="promo__background" aria-hidden="true">
+        <img class="promo__art promo__art--left" src="src/53473.png" alt="" />
+        <img class="promo__art promo__art--right" src="src/2eccd.png" alt="" />
+      </div>
+
+      <div class="promo__inner">
+        <div class="promo__glow" aria-hidden="true">
+          <img src="src/40e3b.svg" alt="" />
+        </div>
+
+        <div class="promo__content">
+          <div class="promo__copy">
+            <p class="promo__title">Чёрная пятница в 1С-ТЕСТЦЕНТР</p>
+            <p class="promo__subtitle">С 10.11 по 30.11 даём скидку -20%</p>
+          </div>
+
+          <div
+            class="coupon"
+            aria-label="Скидка 20 процентов, промокод ТЕСТЦЕНТР20"
+          >
+            <div class="coupon__discount" aria-hidden="true">
+              <img class="coupon__discount-shape" src="src/478cf.svg" alt="" />
+              <div class="coupon__discount-text">
+                <p class="coupon__discount-value">-20%</p>
+              </div>
+            </div>
+            <div class="coupon__center">
+              <p class="coupon__label">Промокод:</p>
+              <p class="coupon__code">ТЕСТЦЕНТР20</p>
+            </div>
+            <div class="coupon__edge-frame" aria-hidden="true">
+              <img class="coupon__edge--right" src="src/6cfba.svg" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <a class="promo__cta" href="#tests">Выбрать тест</a>
+
+        <img
+          class="promo__confetti promo__confetti--one"
+          src="src/26323.png"
+          alt=""
+        />
+        <img
+          class="promo__confetti promo__confetti--two"
+          src="src/2eccd.png"
+          alt=""
+        />
+        <img
+          class="promo__confetti promo__confetti--three"
+          src="src/53473.png"
+          alt=""
+        />
+      </div>
+
+      <img class="promo__percent" src="src/9ce2a.png" alt="" />
+
+      <button class="promo__close" type="button" aria-label="Закрыть баннер">
+        <img src="src/8d5be.svg" alt="" />
+      </button>
+    </aside>
+
+    <script>
+      (() => {
+        const banner = document.getElementById("blackFridayBanner");
+        const closeButton = banner.querySelector(".promo__close");
+
+        closeButton.addEventListener("click", () => {
+          banner.hidden = true;
+        });
+      })();
+    </script>
+  </body>
+</html>
