@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Выберите подходящий формат тестирования и обучения"
+    />
+    <title>Форматы — 1С ТЕСТЦЕНТР</title>
+    <style>
+      @font-face {
+        font-family: "Montserrat";
+        src: url("src/fonts/montserrat.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 100 900;
+      }
+
+      /* База */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #f9faff;
+        color: #1f1f47;
+        font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      /* Секция */
+      .formats {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 112px 0;
+      }
+
+      .formats__container {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        width: 1278px;
+        max-width: 1278px;
+      }
+
+      .formats__title {
+        padding-bottom: 32px;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+
+      .formats__grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        width: 100%;
+      }
+
+      /* Карточка */
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 627px;
+        height: 300px;
+        padding: 32px;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 0 28px rgba(165, 163, 174, 0.19);
+        cursor: pointer;
+      }
+
+      .card__shape {
+        position: absolute;
+        right: -31.12px;
+        bottom: -66.04px;
+        width: 331.119px;
+        height: 156.038px;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .card__shape--pale {
+        z-index: 1;
+        background: #afb8e9;
+        opacity: 0.2;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      .card__fill-clip {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: inherit;
+        pointer-events: none;
+      }
+
+      /*
+       * Волна. Анимируются только transform и opacity — их считает
+       * композитор, поэтому слой не перерисовывается на каждом кадре.
+       */
+      .card__shape--fill {
+        background: #9887ff;
+        opacity: 0;
+        transform: scale(1);
+        transform-origin: calc(100% - 31.12px) calc(100% - 66.04px);
+        transition:
+          transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.6s ease-in-out;
+      }
+
+      .card__text {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        word-break: break-word;
+      }
+
+      .card__title {
+        width: 100%;
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.5;
+      }
+
+      .card__description {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.4;
+        color: rgba(31, 31, 71, 0.65);
+      }
+
+      .card__link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 0;
+        border-bottom: 1px dashed #9887ff;
+      }
+
+      .card__link-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #9887ff;
+        white-space: nowrap;
+      }
+
+      .card__arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+      }
+
+      .card__arrow img {
+        display: block;
+        width: 18px;
+        height: 18px;
+      }
+
+      .card__illustration {
+        position: absolute;
+        z-index: 1;
+        top: 140px;
+        left: 348px;
+        width: 280px;
+        height: 200px;
+        object-fit: contain;
+      }
+
+      /*
+       * Цвет текста переключается быстрее заливки (0.25s против 0.6s),
+       * чтобы текст успевал стать белым раньше, чем закончится заливка.
+       */
+      .card__title,
+      .card__description,
+      .card__link,
+      .card__link-text {
+        transition:
+          color 0.25s ease-in-out,
+          border-color 0.25s ease-in-out;
+      }
+
+      .card__arrow {
+        transition:
+          transform 0.3s ease-in-out,
+          filter 0.25s ease-in-out;
+      }
+
+      /* Наведение и фокус с клавиатуры */
+      .card:hover .card__title,
+      .card:focus-within .card__title {
+        color: #fff;
+      }
+
+      .card:hover .card__description,
+      .card:focus-within .card__description {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .card:hover .card__link,
+      .card:focus-within .card__link {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .card:hover .card__link-text,
+      .card:focus-within .card__link-text {
+        color: #fff;
+      }
+
+      .card:hover .card__arrow,
+      .card:focus-within .card__arrow {
+        transform: rotate(45deg);
+        filter: brightness(0) invert(1);
+      }
+
+      .card:hover .card__shape--pale,
+      .card:focus-within .card__shape--pale {
+        opacity: 0.3;
+      }
+
+      .card:hover .card__shape--fill,
+      .card:focus-within .card__shape--fill {
+        opacity: 1;
+        transform: scale(7.5);
+      }
+
+      @media (max-width: 1350px) {
+        .formats__container {
+          width: calc(100% - 48px);
+        }
+
+        .card {
+          width: 100%;
+        }
+
+        .card__illustration {
+          right: -1px;
+          left: auto;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .formats {
+          padding: 64px 20px;
+        }
+
+        .formats__container {
+          width: 100%;
+        }
+
+        .formats__title {
+          font-size: 28px;
+          white-space: normal;
+        }
+
+        .formats__grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          height: 320px;
+          padding: 24px;
+        }
+
+        .card__title {
+          font-size: 20px;
+        }
+
+        .card__description {
+          max-width: 95%;
+          font-size: 14px;
+        }
+
+        .card__illustration {
+          top: 150px;
+          right: -30px;
+          transform: scale(0.88);
+          transform-origin: right bottom;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card,
+        .card * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="formats">
+      <div class="formats__container">
+        <h1 class="formats__title">Выберите подходящий формат</h1>
+        <div class="formats__grid">
+          <article class="card" tabindex="0">
+            <span
+              class="card__shape card__shape--pale"
+              aria-hidden="true"
+            ></span>
+            <span class="card__fill-clip" aria-hidden="true">
+              <span class="card__shape card__shape--fill"></span>
+            </span>
+
+            <div class="card__text">
+              <h2 class="card__title">Профессиональные тесты</h2>
+              <p class="card__description">
+                Готовая оценка специалистов по конкретному направлению – с
+                определением уровня, сильных и слабых сторон.
+              </p>
+            </div>
+
+            <div class="card__link">
+              <span class="card__link-text">Выбрать тест</span>
+              <span class="card__arrow">
+                <img src="src/image-003.svg" alt="" />
+              </span>
+            </div>
+
+            <img
+              class="card__illustration"
+              src="src/illustration-1.png"
+              alt=""
+              width="280"
+              height="200"
+            />
+          </article>
+
+          <article class="card" tabindex="0">
+            <span
+              class="card__shape card__shape--pale"
+              aria-hidden="true"
+            ></span>
+            <span class="card__fill-clip" aria-hidden="true">
+              <span class="card__shape card__shape--fill"></span>
+            </span>
+
+            <div class="card__text">
+              <h2 class="card__title">Персональные тесты</h2>
+              <p class="card__description">
+                Разработаем профессиональный тест под задачи вашей компании.
+                Создадим тест с нуля под нужную должность, технологию,
+                компетенции или внутренние стандарты компании.
+              </p>
+            </div>
+
+            <div class="card__link">
+              <span class="card__link-text">Заказать разработку</span>
+              <span class="card__arrow">
+                <img src="src/image-003.svg" alt="" />
+              </span>
+            </div>
+
+            <img
+              class="card__illustration"
+              src="src/illustration-2.png"
+              alt=""
+              width="280"
+              height="200"
+            />
+          </article>
+
+          <article class="card" tabindex="0">
+            <span
+              class="card__shape card__shape--pale"
+              aria-hidden="true"
+            ></span>
+            <span class="card__fill-clip" aria-hidden="true">
+              <span class="card__shape card__shape--fill"></span>
+            </span>
+
+            <div class="card__text">
+              <h2 class="card__title">Конструктор тестов</h2>
+              <p class="card__description">
+                Создавайте собственные тесты и настраивайте вопросы, критерии
+                оценки, время и контроль прохождения.
+              </p>
+            </div>
+
+            <div class="card__link">
+              <span class="card__link-text">Подробнее</span>
+              <span class="card__arrow">
+                <img src="src/image-003.svg" alt="" />
+              </span>
+            </div>
+
+            <img
+              class="card__illustration"
+              src="src/illustration-3.png"
+              alt=""
+              width="280"
+              height="200"
+            />
+          </article>
+
+          <article class="card" tabindex="0">
+            <span
+              class="card__shape card__shape--pale"
+              aria-hidden="true"
+            ></span>
+            <span class="card__fill-clip" aria-hidden="true">
+              <span class="card__shape card__shape--fill"></span>
+            </span>
+
+            <div class="card__text">
+              <h2 class="card__title">Конструктор курсов</h2>
+              <p class="card__description">
+                Создавайте программы обучения, назначайте их сотрудникам и
+                проверяйте усвоение материала.
+              </p>
+            </div>
+
+            <div class="card__link">
+              <span class="card__link-text">Подробнее</span>
+              <span class="card__arrow">
+                <img src="src/image-003.svg" alt="" />
+              </span>
+            </div>
+
+            <img
+              class="card__illustration"
+              src="src/illustration-4.png"
+              alt=""
+              width="280"
+              height="200"
+            />
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Снимаем фокус с карточки по Escape.
+      document.querySelectorAll(".card").forEach((card) => {
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") card.blur();
+        });
+      });
+    </script>
+  </body>
+</html>
